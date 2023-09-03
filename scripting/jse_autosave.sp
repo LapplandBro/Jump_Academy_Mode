@@ -46,7 +46,7 @@ public void OnPluginStart() {
 	RegConsoleCmd("sm_as", cmdAutosave, "List autosaves");
 	RegConsoleCmd("sm_autosave", cmdAutosave, "List autosaves");
 
-	g_hCookieRespawnPopup = new Cookie("jse_autosave_spawnpopup", "Set automatic autosave popup on spawn", CookieAccess_Private);
+	g_hCookieRespawnPopup = new Cookie("jse_autosave_spawnpopup", "Всплывающее окно при спауне", CookieAccess_Private);
 	SetCookiePrefabMenu(g_hCookieRespawnPopup, CookieMenu_OnOff_Int, "Меню автосохранения при спауне");
 
 	HookEvent("player_spawn", Event_PlayerSpawn);
