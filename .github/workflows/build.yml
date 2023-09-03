@@ -2,9 +2,9 @@ name: Build and Deploy
 
 on:
   push:
-    branches: '**'
+    branches: [ "master-ru-translation" ]
   pull_request:
-    branches: '**'
+    branches: [ "master-ru-translation" ]
 
 jobs:
   build:
@@ -77,13 +77,13 @@ jobs:
           path: plugins/
 
     - name: Prepare release bundles
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/master-ru-translation'
       run: |
         zip -r jse-bundle.zip LICENSE gamedata plugins scripting translations
         tar -czf jse-bundle.tar.gz LICENSE gamedata plugins scripting translations
 
     - name: "Release development build"
-      if: github.ref == 'refs/heads/master'
+      if: github.ref == 'refs/heads/master-ru-translation'
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
