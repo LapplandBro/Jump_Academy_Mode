@@ -329,7 +329,7 @@ public Action cmdGoto(int iClient, int iArgC) {
 							CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы не были в {limegreen}%N{white} расположение до: {yellow}%s{white}.", iTarget, sBuffer);
 						}
 					} else {
-						CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}]%N {white}is not found near any jump.", iTarget);
+						CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}]%N {white}не встречается ни в одном прыжке.", iTarget);
 					}
 				}
 			}
@@ -445,9 +445,9 @@ public Action cmdSend(int iClient, int iArgC) {
 				}
 
 				if (bTnIsML) {
-					CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%t {white}to {yellow}%N{white}.", sTargetName, iTarget);
+					CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Телепортирован {limegreen}%t {white}к {yellow}%N{white}.", sTargetName, iTarget);
 				} else {
-					CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%s {white}to {yellow}%N{white}.", sTargetName, iTarget);
+					CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Телепортирован {limegreen}%s {white}к {yellow}%N{white}.", sTargetName, iTarget);
 				}
 			}
 		}
@@ -475,7 +475,7 @@ public Action cmdSend(int iClient, int iArgC) {
 			}
 
 			if (iTargetCount > 1 && !CheckCommandAccess(iClient, MULTITARGET_OVERRIDE, ADMFLAG_GENERIC)) {
-				ReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}You do not have permission to multi-target.");
+				ReplyToCommand(iClient, "[Jump Essentials] {white}У вас нет прав для мультитаргентинга");
 				return Plugin_Handled;
 			}
 
@@ -494,9 +494,9 @@ public Action cmdSend(int iClient, int iArgC) {
 					GetCourseCheckpointDisplayName(iCourse, 0, true, sBuffer, sizeof(sBuffer));
 
 					if (bTnIsML) {
-						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%t {white}to {yellow}%s{white}.", sTargetName, sBuffer);
+						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Телепортирован {limegreen}%t {white}к {yellow}%s{white}.", sTargetName, sBuffer);
 					} else {
-						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%s {white}to {yellow}%s{white}.", sTargetName, sBuffer);
+						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Телепортирован {limegreen}%s {white}к {yellow}%s{white}.", sTargetName, sBuffer);
 					}
 				} else {
 					Jump iJump = ResolveJumpNumber(iCourse, iJumpNumber);
@@ -508,16 +508,16 @@ public Action cmdSend(int iClient, int iArgC) {
 						GetCourseCheckpointDisplayName(iCourse, iJumpNumber, false, sBuffer, sizeof(sBuffer));
 
 						if (bTnIsML) {
-							CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%t {white}to {yellow}%s{white}.", sTargetName, sBuffer);
+							CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Телепортирован {limegreen}%t {white}к {yellow}%s{white}.", sTargetName, sBuffer);
 						} else {
-							CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%s {white}to {yellow}%s{white}.", sTargetName, sBuffer);
+							CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Телепортирован {limegreen}%s {white}к {yellow}%s{white}.", sTargetName, sBuffer);
 						}
 					} else {
-						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Cannot find specified jump number.");
+						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Невозможно найти указанный номер уровня.");
 					}
 				}
 			} else {
-				CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Cannot find specified course number.");
+				CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Невозможно найти указанный номер курса.");
 			}
 		}
 		default: {
@@ -538,12 +538,12 @@ void SendMainMenu(int iClient, MenuHandler fnMainHandler, MenuHandler fnPlayerHa
 	}
 
 	Menu hMenu = new Menu(fnMainHandler);
-	hMenu.SetTitle("Select Destination");
+	hMenu.SetTitle("Выберите назначение:");
 
 	ArrayList hCourses = GetTrackerCourses();
 
-	hMenu.AddItem(NULL_STRING, "Player", Client_GetCount() > 1 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
-	hMenu.AddItem(NULL_STRING, "Jump", hCourses.Length ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+	hMenu.AddItem(NULL_STRING, "К игроку", Client_GetCount() > 1 ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
+	hMenu.AddItem(NULL_STRING, "К уровню", hCourses.Length ? ITEMDRAW_DEFAULT : ITEMDRAW_DISABLED);
 
 	hMenu.Display(iClient, 5);
 }
@@ -629,7 +629,7 @@ void SendCourseMenu(int iClient, MenuHandler fnCourseHandler, MenuHandler fnJump
 		delete hProgress;
 	
 		if (!hCourseNumbers.Length) {
-			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы не посещали никаких курсов.");
+			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы не прошли никаких курсов.");
 		}
 	}
 
