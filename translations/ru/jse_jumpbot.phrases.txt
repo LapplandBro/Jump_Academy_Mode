@@ -393,7 +393,7 @@
 	
 	"Repository"
 	{
-		"ru"			"Репозиторий"
+		"ru"			"Онлайн"
 	}
 	
 	"Running Upgrade"
