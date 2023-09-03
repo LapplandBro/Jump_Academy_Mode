@@ -209,12 +209,12 @@ void DrawCheckpointInfo(Panel hPanel, int iCourseNumber, int iJumpNumber, bool b
 	char sBuffer[1024];
 
 	if (!GetCourseDisplayName(iCourse, sBuffer, sizeof(sBuffer))) {
-		Format(sBuffer, sizeof(sBuffer), "Course: %s%s", sBuffer, bControlPoint ? " (END)" : NULL_STRING);
+		Format(sBuffer, sizeof(sBuffer), "Курс: %s%s", sBuffer, bControlPoint ? " (END)" : NULL_STRING);
 		hPanel.DrawText(sBuffer);
 	}
 
 	if (iJump) {
-		Format(sBuffer, sizeof(sBuffer), "Jump:   %2d/%2d", iJump.iNumber, iCourse.hJumps.Length);
+		Format(sBuffer, sizeof(sBuffer), "Прыжок:   %2d/%2d", iJump.iNumber, iCourse.hJumps.Length);
 		hPanel.DrawText(sBuffer);
 	}
 
@@ -224,10 +224,10 @@ void DrawCheckpointInfo(Panel hPanel, int iCourseNumber, int iJumpNumber, bool b
 
 	if (iTimeDiff < 86400) {
 		FormatTime(sBuffer, sizeof(sBuffer), "%r", iTimestamp);
-		Format(sBuffer, sizeof(sBuffer), "Today, %s", sBuffer);
+		Format(sBuffer, sizeof(sBuffer), "Сегодня, %s", sBuffer);
 	} else if (iTimeDiff < 2*86400) {
 		FormatTime(sBuffer, sizeof(sBuffer), "%r", iTimestamp);
-		Format(sBuffer, sizeof(sBuffer), "Yesterday, %s", sBuffer);
+		Format(sBuffer, sizeof(sBuffer), "Вчера, %s", sBuffer);
 	} else {
 		FormatTime(sBuffer, sizeof(sBuffer), "%A, %b %d, %Y", iTimestamp);
 		Format(sBuffer, sizeof(sBuffer), "%s", sBuffer);
@@ -380,7 +380,7 @@ void SendLastSavePanel(int iClient) {
 	g_eCheckpointSelected[iClient] = eCheckpoint;
 
 	Panel hPanel = new Panel();
-	hPanel.SetTitle("Teleport to autosave?");
+	hPanel.SetTitle("Телепортироваться обратно?");
 
 	hPanel.DrawText(" ");
 
@@ -388,12 +388,12 @@ void SendLastSavePanel(int iClient) {
 
 	hPanel.DrawText(" ");
 
-	hPanel.DrawItem("Yes");
-	hPanel.DrawItem("No");
+	hPanel.DrawItem("Да");
+	hPanel.DrawItem("Нет");
 
 	if (hCheckpoint.Length > 1) {
 		char sBuffer[32];
-		FormatEx(sBuffer, sizeof(sBuffer), "More (%d)", hCheckpoint.Length);
+		FormatEx(sBuffer, sizeof(sBuffer), "Больше (%d)", hCheckpoint.Length);
 		hPanel.DrawItem(sBuffer);
 	}
 
