@@ -1,25 +1,25 @@
-# Jump Server Essentials
+# [Team Fortress 2] Jump Server Essentials
 
-JSE is a set of modular plugins for enabling standard features present in most Team Fortress 2 jump servers. This fork is designed to replace the English words in the interface with Russian words. 
+JSE - это набор модульных плагинов для включения стандартных функций, присутствующих в большинстве прыжковых серверов Team Fortress 2. Данный форк предназначен для замены английских слов в интерфейсе на русские. 
 
 ## Modules
-* JSE-Autosave - Automatically save course passages in MySQL database to return to them via JSE-Teleport;
-* JSE-Core - Kernel of this mode;
-* JSE-Foresight - Free camera to view the level with time constraints;
-* JSE-JumpBOT - Record and play recordings from the server, or from a local repository to help you pass levels;
-* JSE-Marker - Setting auxiliary markers;
-* JSE-Map Info - Map information, of cource;
-* JSE-Scoreboard - Scoreboard :)
-* JSE-Show Keys - Showing client-side keystrokes in the HUD.
-* JSE-Teleport - Teleport to levels already completed, as well as to players for assistance.
-* JSE-Tracker - Pass tracking, submodule for Autosave
+* JSE-Autosave - автоматическое сохранение пройденных курсов в базе данных MySQL для возврата к ним через JSE-Teleport;
+* JSE-Core - Ядро данного режима;
+* JSE-Foresight - Свободная камера для просмотра уровня с ограничением по времени;
+* JSE-JumpBOT - Запись и воспроизведение записей с сервера или из локального хранилища для помощи в прохождении уровней;
+* JSE-Marker - Установка вспомогательных маркеров;
+* JSE-Map Info - Информация о карте, конечно;
+* JSE-Scoreboard - Подсчет очков :)
+* JSE-Show Keys - Отображение нажатий клавиш на стороне клиента в HUD.
+* JSE-Teleport - Телепорт на уже пройденные уровни, а также к игрокам за помощью.
+* JSE-Tracker - Отслеживание прохождения, подмодуль для автосохранения;
 
-## Required
+## Требуется:
 * Metamod 
 * Sourcemod 1.12 
 * Lin/Win SRCDS 
 
-## Dependencies
+## Зависимости:
 * [Sourcemod 1.10](https://www.sourcemod.net/)
 * [AutoExecConfig](https://github.com/Impact123/AutoExecConfig)
 * [BotController](https://github.com/LapplandBro/sourcemod-botcontroller)
