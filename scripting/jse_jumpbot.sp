@@ -1345,7 +1345,7 @@ public Action OnPlayerRunCmd(int iClient, int &iButtons, int &iImpulse, float fV
 				ToTimeDisplay(sTimePlay, sizeof(sTimePlay), g_iRecBufferFrame/66);
 				ToTimeDisplay(sTimeTotal, sizeof(sTimePlay), g_hRecBufferFrames.Length/66);
 
-				char sRecordingType[32];
+				char sRecordingType[64]; //Fix Question on russian translations (because UTF-8)
 				if (g_iRecording && g_iRecording.Repo) {
 					FormatEx(sRecordingType, sizeof(sRecordingType), "%T: %T", "Source", iClient, "Repository", iClient);
 				} else {
