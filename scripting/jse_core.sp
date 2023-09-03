@@ -713,13 +713,13 @@ public int Native_ClearScore(Handle hPlugin, int iArgC) {
 
 public Action cmdAmmo(int iClient, int iArgC) {
 	if (g_bBlockEquip[iClient] || g_bBlockRegen[iClient]) {
-		CReplyToCommand(iClient, "{dodgerblue}[jse] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{GREEN}[{LIGHTGREEN}Jump Essentials{GREEN}]{WHITE}%t", "No Access");
 		return Plugin_Handled;
 	}
 
 	g_bAmmoRegen[iClient] = !g_bAmmoRegen[iClient];
 
-	CReplyToCommand(iClient, "{dodgerblue}[jse] {white}%s ammo and clip regeneration.", g_bAmmoRegen[iClient] ? "Enabled" : "Disabled");
+	CReplyToCommand(iClient, "{GREEN}[{LIGHTGREEN}Jump Essentials{GREEN}]{WHITE}%s ammo and clip regeneration.", g_bAmmoRegen[iClient] ? "Enabled" : "Disabled");
 
 	return Plugin_Handled;
 }
@@ -731,7 +731,7 @@ bool checkSpawned(int iClient) {
 	TFTeam iTFTeam = TF2_GetClientTeam(iClient);
 
 	if (iTFTeam <= TFTeam_Spectator || iClass == TFClass_Unknown) {
-		CReplyToCommand(iClient, "{dodgerblue}[jse] {white}You must be spawned to use this command.");
+		CReplyToCommand(iClient, "{GREEN}[{LIGHTGREEN}Jump Essentials{GREEN}]{WHITE}You must be spawned to use this command.");
 		return false;
 	}
 
