@@ -413,7 +413,7 @@ void FetchFromAPI_Multiple(HTTPRequestCallback fnCallback, any aData, bool bExte
 		sExtendedFilter = "&extended=1";
 	}
 
-	char sExactFilter[16];
+	char sExactFilter[64];
 	if (bExactMatch) {
 		sExactFilter = "&exact=1";
 	}
@@ -666,7 +666,7 @@ void PrintMapInfo(JSONObject hMapInfo, bool bExtended, char[] sBuffer, int iBuff
 		Format(sBuffer, iBufferLength, "%s\n    Класс: %s", sBuffer, sClass);
 	}
 
-	char sTier[16];
+	char sTier[64];
 	if (hMapInfo.HasKey("tier")) {
 		JSONObject hTier = view_as<JSONObject>(hMapInfo.Get("tier"));
 
@@ -689,34 +689,34 @@ void PrintMapInfo(JSONObject hMapInfo, bool bExtended, char[] sBuffer, int iBuff
 		}
 
 		if (sTier[0]) {
-			Format(sBuffer, iBufferLength, "%s\n     Tier:%s", sBuffer, sTier);
+			Format(sBuffer, iBufferLength, "%s\n     Уровней:%s", sBuffer, sTier);
 		}
 
 		delete hTier;
 	}
 
 	if (hMapInfo.HasKey("type")) {
-		char sLayout[16];
+		char sLayout[64];
 		switch (hMapInfo.GetInt("type")) {
 			case 1:
-				sLayout = "Connectors";
+				sLayout = "Телепорты";
 			case 2:
-				sLayout = "Doors";
+				sLayout = "Двери";
 		}
 
 		if (sLayout[0]) {
-			Format(sBuffer, iBufferLength, "%s\n   Layout: %s", sBuffer, sLayout);
+			Format(sBuffer, iBufferLength, "%s\n   Разметок: %s", sBuffer, sLayout);
 		}
 	}
 
 	if (hMapInfo.HasKey("courses")) {
 		int iCourses = hMapInfo.GetInt("courses");
 
-		Format(sBuffer, iBufferLength, "%s\n  Courses: %d", sBuffer, iCourses);
+		Format(sBuffer, iBufferLength, "%s\n  Курсов: %d", sBuffer, iCourses);
 
 		if (hMapInfo.HasKey("jumps")) {
 			int iJumps = hMapInfo.GetInt("jumps");
-			Format(sBuffer, iBufferLength, "%s\n    Jumps: %d", sBuffer, iJumps);
+			Format(sBuffer, iBufferLength, "%s\n    Прыжков: %d", sBuffer, iJumps);
 		}
 
 		if (hMapInfo.HasKey("bonus")) {
@@ -949,16 +949,16 @@ void ShowMapInfoPanel(int iClient, int iTime=0, bool bShowControls=true) {
 
 	// Layout type between jumps
 	if (hMapInfo.HasKey("type")) {
-		char sLayout[16];
+		char sLayout[64];
 		switch (hMapInfo.GetInt("type")) {
 			case 1:
-				sLayout = "Connectors";
+				sLayout = "Телепорты";
 			case 2:
-				sLayout = "Doors";
+				sLayout = "Двери";
 		}
 
 		if (sLayout[0]) {
-			FormatEx(sBuffer, sizeof(sBuffer), "  Layout:  %s", sLayout);
+			FormatEx(sBuffer, sizeof(sBuffer), "  Компоновка:  %s", sLayout);
 			hPanel.DrawText(sBuffer);
 		}
 	}  else {
@@ -966,7 +966,7 @@ void ShowMapInfoPanel(int iClient, int iTime=0, bool bShowControls=true) {
 	}
 
 	if (iCourses && iJumps) {
-		FormatEx(sBuffer, sizeof(sBuffer), "Courses:  %d\n   Jumps:  %d", iCourses, iJumps);
+		FormatEx(sBuffer, sizeof(sBuffer), "Курсов:  %d\n   Прыжков:  %d", iCourses, iJumps);
 		if (iBonus > 0) {
 			Format(sBuffer, sizeof(sBuffer), "%s (+%d)", sBuffer, iBonus);
 		}
