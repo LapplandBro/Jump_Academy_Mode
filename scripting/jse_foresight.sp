@@ -151,9 +151,9 @@ public Action OnPlayerRunCmd(int iClient, int &iButtons, int &iImpulse, float ve
 
 	if (GetGameTickCount() % 33 == 0) {
 		if (fStartTime) {
-			PrintHintText(iClient, "Press %s to exit foresight (%.0f)", "%+attack%", fTimeLeft);
+			PrintHintText(iClient, "Нажмите %s чтобы выключить свободный полет (%.0f)", "%+attack%", fTimeLeft);
 		} else {
-			PrintHintText(iClient, "Press %s to exit foresight", "%+attack%");
+			PrintHintText(iClient, "Нажмите %s чтобы выйти из режиаа свободного полета", "%+attack%");
 		}
 		
 		StopSound(iClient, SNDCHAN_STATIC, "ui/hint.wav");
