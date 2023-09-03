@@ -65,11 +65,11 @@ public void OnPluginStart() {
 	RegConsoleCmd("sm_mi", cmdMapInfo, "Show the map information");
 	RegConsoleCmd("sm_mapinfo", cmdMapInfo, "Show the map information");
 
-	g_hJoinMessageCookie = new Cookie("jse_mapinfo_joinmessage", "Show map info on join", CookieAccess_Public);
-	g_hExtendedTiersCookie = new Cookie("jse_mapinfo_extendedtiers", "Show extended map tiers beyond T6", CookieAccess_Public);
-	g_hViewModeCookie = new Cookie("jse_mapinfo_viewmode", "Default view mode for map info search results", CookieAccess_Public);
+	g_hJoinMessageCookie = new Cookie("jse_mapinfo_joinmessage", "Показать информацию при коннекте", CookieAccess_Public);
+	g_hExtendedTiersCookie = new Cookie("jse_mapinfo_extendedtiers", "Показ расширенных уровней карты", CookieAccess_Public);
+	g_hViewModeCookie = new Cookie("jse_mapinfo_viewmode", "Режим просмотра по умолчанию", CookieAccess_Public);
 
-	SetCookieMenuItem(CookieMenuHandler_Settings, 0, "Map Info");
+	SetCookieMenuItem(CookieMenuHandler_Settings, 0, "Информация о карте");
 
 	LoadTranslations("common.phrases");
 	LoadTranslations("nominations.phrases");
@@ -1082,7 +1082,7 @@ void ShowMapInfoListMenu(int iClient) {
 	g_hLookupStack[iClient].GetArray(g_hLookupStack[iClient].Length-1, eInfoLookup);
 
 	Menu hMenu = new Menu(MenuHandler_MapList);
-	hMenu.SetTitle("========= Maps =========\n    S D Cls   Name");
+	hMenu.SetTitle("========= Карта =========\n    S D Cls   Name");
 
 	char sBuffer[64];
 
@@ -1167,7 +1167,7 @@ void ShowMapAuthorsMenu(int iClient, bool bFromBack=false) {
 	g_hLookupStack[iClient].GetArray(g_hLookupStack[iClient].Length-1, eInfoLookup);
 
 	Menu hMenu = new Menu(MenuHandler_AuthorList);
-	hMenu.SetTitle("==== Authors ====");
+	hMenu.SetTitle("==== Авторы ====");
 
 	JSONObject hMapInfo = view_as<JSONObject>(eInfoLookup.hMapInfoList.Get(eInfoLookup.iPage));
 
@@ -1246,12 +1246,12 @@ void ShowMapAuthorPanel(int iClient) {
 
 	Panel hPanel = new Panel();
 
-	hPanel.SetTitle("==== Author ====");
+	hPanel.SetTitle("==== Автор ====");
 	hPanel.DrawText(sBuffer);
 	hPanel.DrawText(" ");
 
-	hPanel.DrawItem("View Profile");
-	hPanel.DrawItem("List Maps");
+	hPanel.DrawItem("Посмотреть профиль");
+	hPanel.DrawItem("Список карт");
 
 	hPanel.DrawText(" ");
 
@@ -1259,7 +1259,7 @@ void ShowMapAuthorPanel(int iClient) {
 	hPanel.DrawItem("Back");
 
 	hPanel.CurrentKey = 10;
-	hPanel.DrawItem("Exit", ITEMDRAW_CONTROL);
+	hPanel.DrawItem("Выход", ITEMDRAW_CONTROL);
 	hPanel.Send(iClient, MenuHandler_AuthorInfo, 0);
 
 	delete hPanel;
