@@ -400,7 +400,7 @@ public Action cmdShowKeys(int iClient, int iArgC) {
 		CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Показ нажатий %s.", g_bEnabled[iClient] ? "включен" : "выключен");
 		g_iTarget[iClient] = 0;
 	} else {
-		char sArg1[32];
+		char sArg1[64];
 		GetCmdArg(1, sArg1, sizeof(sArg1));
 
 		int iTarget = FindTarget(iClient, sArg1, false, false);
@@ -480,10 +480,10 @@ public Action cmdForceShowKeys(int iClient, int iArgC) {
 		return Plugin_Handled;
 	}
 
-	char sArg1[32];
+	char sArg1[64];
 	GetCmdArg(1, sArg1, sizeof(sArg1));
 
-	char sArg2[32];
+	char sArg2[64];
 	GetCmdArg(2, sArg2, sizeof(sArg2));
 
 	bool bEnabled = StringToInt(sArg2) != 0;
@@ -517,10 +517,10 @@ stock bool GetCookieBool(int iClient, Cookie hCookie, bool &bValue) {
 }
 
 stock bool GetCookieFloat2D(int iClient, Cookie hCookie, float &fValueA, float &fValueB) {
-	char sBuffer[32];
+	char sBuffer[64];
 	hCookie.Get(iClient, sBuffer, sizeof(sBuffer));
 
-	char sFloatBuffers[2][32];
+	char sFloatBuffers[2][64];
 	if (ExplodeString(sBuffer, " ", sFloatBuffers, sizeof(sFloatBuffers), sizeof(sFloatBuffers[]), false) != 2) {
 		return false;
 	}
@@ -532,7 +532,7 @@ stock bool GetCookieFloat2D(int iClient, Cookie hCookie, float &fValueA, float &
 }
 
 stock bool GetCookieRGBA(int iClient, Cookie hCookie, int &iValueA, int &iValueB, int &iValueC, int &iValueD) {
-	char sBuffer[32];
+	char sBuffer[64];
 	hCookie.Get(iClient, sBuffer, sizeof(sBuffer));
 
 	if (strlen(sBuffer) != 8) {
@@ -550,7 +550,7 @@ stock bool GetCookieRGBA(int iClient, Cookie hCookie, int &iValueA, int &iValueB
 }
 
 stock void SetCookieFloat2D(int iClient, Cookie hCookie, float fValueA, float fValueB) {
-	char sBuffer[32];
+	char sBuffer[64];
 	FormatEx(sBuffer, sizeof(sBuffer), "%.4f %.4f", fValueA, fValueB);
 
 	hCookie.Set(iClient, sBuffer);
