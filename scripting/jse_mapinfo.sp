@@ -926,7 +926,7 @@ void ShowMapInfoPanel(int iClient, int iTime=0, bool bShowControls=true) {
 
 	// Tiers
 	if (iTierS || iTierD) {
-		FormatEx(sBuffer, sizeof(sBuffer), "Tier:  ");
+		FormatEx(sBuffer, sizeof(sBuffer), "Уровень:  ");
 
 		if (iTierS) {
 			Format(sBuffer, sizeof(sBuffer), "%sS-%d  ", sBuffer, iTierS);
@@ -1022,7 +1022,7 @@ void ShowMapInfoPanel(int iClient, int iTime=0, bool bShowControls=true) {
 		if (iAuthorsLength == 1) {
 			hPanel.DrawItem("Author");
 		} else {
-			FormatEx(sBuffer, sizeof(sBuffer), "Authors (%d)", iAuthorsLength);
+			FormatEx(sBuffer, sizeof(sBuffer), "Авторы (%d)", iAuthorsLength);
 			hPanel.DrawItem(sBuffer);
 		}
 	} else {
@@ -1065,7 +1065,7 @@ void ShowMapInfoPanel(int iClient, int iTime=0, bool bShowControls=true) {
 	}
 
 	hPanel.CurrentKey = 10;
-	hPanel.DrawItem("Exit", ITEMDRAW_CONTROL);
+	hPanel.DrawItem("Выход", ITEMDRAW_CONTROL);
 	hPanel.Send(iClient, MenuHandler_MapInfo, iTime);
 
 	delete hPanel;
