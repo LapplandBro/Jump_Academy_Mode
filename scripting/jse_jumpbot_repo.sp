@@ -156,7 +156,7 @@ public int OnSocketError(Handle hSocket, const int iErrorType, const int iErrorN
 	}
 	
 	if (g_hDebug.BoolValue && Client_IsValid(g_iClientOfInterest) && IsClientInGame(g_iClientOfInterest)) {
-		CPrintToChat(g_iClientOfInterest, "{dodgerblue}[jb] {white}%t", "Download Fail");
+		CPrintToChat(g_iClientOfInterest, "{green}[{lightgreen}jb{green}] {white}%t", "Download Fail");
 	}
 	
 	char sPage[64];
@@ -192,7 +192,7 @@ public int OnSocketConnected(Handle hSocket, any aArg) {
 	hFileInfo.GetString(FileInfo_sPage, sPage, sizeof(sPage));
 	
 	if (g_hDebug.BoolValue) {
-		CPrintToChatAll("{dodgerblue}[jb] {white}Establishing connection to: %s", sPage);
+		CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}Establishing connection to: %s", sPage);
 	}
 	
 	FormatEx(sRequest, sizeof(sRequest), "GET %s HTTP/1.0\r\nHost: %s\r\nConnection: close\r\nCache-Control: no-cache, no-store, must-revalidate\r\nPragma: no-cache\r\nExpires: 0\r\n\r\n", sPage, API_HOST);
@@ -207,7 +207,7 @@ public int OnSocketReceive(Handle hSocket, char[] sData, const int iSize, any aA
 	if (!hFileInfo.Get(FileInfo_bConcat)) {
 		if (strncmp(sData, "HTTP/", 5) == 0 && strncmp(sData[9], "200", 3) == 0) {
 			if (g_hDebug.BoolValue) {
-				CPrintToChatAll("{dodgerblue}[jb] {white}Received HTTP OK header");
+				CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}Received HTTP OK header");
 			}
 			
 			hFileInfo.Set(FileInfo_bConcat, true);
@@ -224,8 +224,8 @@ public int OnSocketReceive(Handle hSocket, char[] sData, const int iSize, any aA
 					iRecording.FileSize = StringToInt(sFileSize);
 					
 					if (g_hDebug.BoolValue) {
-						CPrintToChatAll("{dodgerblue}[jb] {white}Content-Length: %s bytes", sFileSize);
-						CPrintToChatAll("{dodgerblue}[jb] {white}Initial packet size: %d bytes", iSize-(StrContains(sData[16], "\r\n\r\n")+16+4));
+						CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}Content-Length: %s bytes", sFileSize);
+						CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}Initial packet size: %d bytes", iSize-(StrContains(sData[16], "\r\n\r\n")+16+4));
 					}
 				}
 			}
@@ -242,7 +242,7 @@ public int OnSocketReceive(Handle hSocket, char[] sData, const int iSize, any aA
 		}
 	} else {
 		if (g_hDebug.BoolValue) {
-			CPrintToChatAll("{dodgerblue}[jb] {white}Received packet: %d bytes", iSize);
+			CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}Received packet: %d bytes", iSize);
 		}
 		
 		for (int i=0; i<iSize; i++) {
@@ -259,7 +259,7 @@ public int OnSocketDisconnected(Handle hSocket, any aArg) {
 	FlushFile(hFile);
 	
 	if (g_hDebug.BoolValue) {
-		CPrintToChatAll("{dodgerblue}[jb] {white}Connection closed");
+		CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}Connection closed");
 	}
 	
 	switch (hFileInfo.Get(FileInfo_iType)) {
@@ -278,7 +278,7 @@ public int OnSocketDisconnected(Handle hSocket, any aArg) {
 			delete hFile;
 			
 			if (g_hDebug.BoolValue) {
-				CPrintToChatAll("{dodgerblue}[jb] {white}Downloaded %d/%d bytes", FileSize(sFilePath), iRecording.FileSize);
+				CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}Downloaded %d/%d bytes", FileSize(sFilePath), iRecording.FileSize);
 			}
 			
 			if (FileSize(sFilePath) == iRecording.FileSize) {
@@ -300,7 +300,7 @@ public int OnSocketDisconnected(Handle hSocket, any aArg) {
 			delete hFile;
 			
 			if (g_hDebug.BoolValue) {
-				CPrintToChatAll("{dodgerblue}[jb] {white}Downloaded %d/%d bytes", FileSize(sFilePath), iRecording.FileSize);
+				CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}Downloaded %d/%d bytes", FileSize(sFilePath), iRecording.FileSize);
 			}
 			
 			if (FileSize(sFilePath) == iRecording.FileSize) {
