@@ -480,7 +480,7 @@ void SendConfirmationPanel(int iClient, ArrayList hCheckpoint, int iIndex) {
 	}
 
 	Panel hPanel = new Panel();
-	hPanel.SetTitle("Teleport to autosave?");
+	hPanel.SetTitle("Телепортироваться?");
 
 	hPanel.DrawText(" ");
 
@@ -488,18 +488,18 @@ void SendConfirmationPanel(int iClient, ArrayList hCheckpoint, int iIndex) {
 
 	hPanel.DrawText(" ");
 
-	hPanel.DrawItem("Yes");
-	hPanel.DrawItem("No");
+	hPanel.DrawItem("Да");
+	hPanel.DrawItem("Нет");
 
 	hPanel.DrawText(" ");
 
 	hPanel.CurrentKey = 4;
-	hPanel.DrawItem("Delete");
+	hPanel.DrawItem("Удалить");
 
 	if (hCheckpoint.Length > 1) {
 		hPanel.DrawText(" ");
 		hPanel.CurrentKey = 8;
-		hPanel.DrawItem("Back");
+		hPanel.DrawItem("Назад");
 	}
 
 	hPanel.Send(iClient, MenuHandler_Confirmation, 0);
