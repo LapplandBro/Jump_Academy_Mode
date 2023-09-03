@@ -5854,36 +5854,36 @@ public void CookieMenuHandler_Options(int iClient, CookieMenuAction iAction, any
 void sendOptionsPanel(int iClient) {
 	char sBuffer[128];
 	g_hBotName.GetString(sBuffer, sizeof(sBuffer));
-	Format(sBuffer, sizeof(sBuffer), "%s Settings", sBuffer);
+	Format(sBuffer, sizeof(sBuffer), "%s | Настройки", sBuffer);
 	
 	Menu hMenu = new Menu(MenuHandler_Options);
 	hMenu.SetTitle(sBuffer);
 	
 	bool bBubble = true;
 	getCookieBool(iClient, g_hCookieBubble, bBubble);
-	FormatEx(sBuffer, sizeof(sBuffer), bBubble ? "Disable Bubbles" : "Enable Bubbles");
+	FormatEx(sBuffer, sizeof(sBuffer), bBubble ? "Выключить пузырьки" : "Включить пузырьки");
 	hMenu.AddItem(NULL_STRING, sBuffer);
 	
 	bool bTrail = true;
 	getCookieBool(iClient, g_hCookieTrail, bTrail);
-	FormatEx(sBuffer, sizeof(sBuffer), bTrail ? "Disable Trails" : "Enable Trails");
+	FormatEx(sBuffer, sizeof(sBuffer), bTrail ? "Выключить следы" : "Включить следы");
 	hMenu.AddItem(NULL_STRING, sBuffer);
 	
 	bool bInteract = true;
 	getCookieBool(iClient, g_hCookieInteract, bInteract);
-	FormatEx(sBuffer, sizeof(sBuffer), bInteract ? "Disable Interactions" : "Enable Interactions");
+	FormatEx(sBuffer, sizeof(sBuffer), bInteract ? "Отключить интерактив" : "Включить интерактив");
 	hMenu.AddItem(NULL_STRING, sBuffer);
 	
 	char sPerspectives[4][5] =  { "None", "1st", "", "3rd" };
 	
 	int iPerspective = g_hShowMeDefault.IntValue;
 	getCookieInt(iClient, g_hCookiePerspective, iPerspective);
-	FormatEx(sBuffer, sizeof(sBuffer), "Playback Perspective (%s)", sPerspectives[iPerspective]);
+	FormatEx(sBuffer, sizeof(sBuffer), "Перспектива записей (%s)", sPerspectives[iPerspective]);
 	hMenu.AddItem(NULL_STRING, sBuffer);
 	
 	float fSpeed = 1.0;
 	getCookieFloat(iClient, g_hCookieSpeed, fSpeed);
-	FormatEx(sBuffer, sizeof(sBuffer), "Playback Speed (%.0f%%)", 100*fSpeed);
+	FormatEx(sBuffer, sizeof(sBuffer), "Скорость записей (%.0f%%)", 100*fSpeed);
 	hMenu.AddItem(NULL_STRING, sBuffer);
 	
 	
@@ -5892,7 +5892,7 @@ void sendOptionsPanel(int iClient) {
 
 void sendSpeedOptionsPanel(int iClient) {
 	char sBuffer[128];
-	FormatEx(sBuffer, sizeof(sBuffer), "Playback Speed");
+	FormatEx(sBuffer, sizeof(sBuffer), "Скорость воспроизведения");
 	
 	Menu hMenu = new Menu(MenuHandler_SpeedOptions);
 	hMenu.SetTitle(sBuffer);
@@ -5909,15 +5909,15 @@ void sendSpeedOptionsPanel(int iClient) {
 
 void sendPerspectiveOptionsPanel(int iClient) {
 	char sBuffer[128];
-	FormatEx(sBuffer, sizeof(sBuffer), "Playback Perspective");
+	FormatEx(sBuffer, sizeof(sBuffer), "Перспектива");
 	
 	Menu hMenu = new Menu(MenuHandler_PerspectiveOptions);
 	hMenu.SetTitle(sBuffer);
 	
-	hMenu.AddItem("1", "First-person");
+	hMenu.AddItem("1", "Первое лицо");
 	hMenu.AddItem(NULL_STRING, NULL_STRING, ITEMDRAW_DISABLED);
-	hMenu.AddItem("3", "Third-person");
-	hMenu.AddItem("0", "None");
+	hMenu.AddItem("3", "Третье лицо");
+	hMenu.AddItem("0", "Никакое");
 	
 	hMenu.ExitButton = false;
 	hMenu.ExitBackButton = true;
@@ -5933,13 +5933,13 @@ void BuildStateMenu(Menu hMenu) {
 		IntToString(i+1, sInfo, sizeof(sInfo));
 
 		if (!iRecording) {
-			hMenu.AddItem(sInfo, " -- Empty --", ITEMDRAW_DISABLED);
+			hMenu.AddItem(sInfo, " -- Пусто --", ITEMDRAW_DISABLED);
 		} else {
 			char sTime[64];
 			FormatTime(sTime, sizeof(sTime), "%b %d %G - %r", iRecording.Timestamp);
 
 			char sDisplay[128];
-			FormatEx(sDisplay, sizeof(sDisplay), "%s - %4d frames", sTime, iRecording.Frames.Length);
+			FormatEx(sDisplay, sizeof(sDisplay), "%s - %4d кадров", sTime, iRecording.Frames.Length);
 			hMenu.AddItem(sInfo, sDisplay);
 		}
 	}
