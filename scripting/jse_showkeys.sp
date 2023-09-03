@@ -397,7 +397,7 @@ public Action cmdShowKeys(int iClient, int iArgC) {
 
 	if (iArgC == 0) {
 		g_bEnabled[iClient] = !g_bEnabled[iClient];
-		CPrintToChat(iClient, "{dodgerblue}[jse] {white}Show keys %s.", g_bEnabled[iClient] ? "enabled" : "disabled");
+		CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Показать кнопки %s.", g_bEnabled[iClient] ? "enabled" : "disabled");
 		g_iTarget[iClient] = 0;
 	} else {
 		char sArg1[32];
@@ -407,7 +407,7 @@ public Action cmdShowKeys(int iClient, int iArgC) {
 		if (iTarget != -1) {
 			g_iTarget[iClient] = iTarget;
 			g_bEnabled[iClient] = true;
-			CPrintToChat(iClient, "{dodgerblue}[jse] {white}Showing keys for {limegreen}%N{white}.", iTarget);
+			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Показать кнопки для {limegreen}%N{white}.", iTarget);
 		} else {
 			g_bEnabled[iClient] = false;
 		}
@@ -493,8 +493,8 @@ public Action cmdForceShowKeys(int iClient, int iArgC) {
 		g_iTarget[iTarget] = 0;
 		g_bEnabled[iTarget] = bEnabled;
 
-		CPrintToChat(iTarget, "{dodgerblue}[jse] {white}Show keys %s.", bEnabled ? "enabled" : "disabled");
-		CPrintToChat(iClient, "{dodgerblue}[jse] {white}Show keys %s for {limegreen}%N{white}.", bEnabled ? "enabled" : "disabled", iTarget);
+		CPrintToChat(iTarget, "{green}[{lightgreen}Jump Essentials{green}] {white}Показать кнопки %s.", bEnabled ? "enabled" : "disabled");
+		CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Показать кнопки %s для {limegreen}%N{white}.", bEnabled ? "enabled" : "disabled", iTarget);
 
 		g_hCookieEnabled.Set(iTarget, bEnabled ? "1" : "0");
 	}

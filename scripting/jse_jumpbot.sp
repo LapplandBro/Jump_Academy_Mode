@@ -880,7 +880,7 @@ public void OnGameFrame() {
 
 				if (g_hDebug.BoolValue) {
 					int iFilePart = FindCharInString(sFilePath, '/', true);
-					CPrintToChatAll("{dodgerblue}[jb] {white}%t %d/%d: %s", "Load", g_hRecordings.Length - g_hPlaybackQueue.Length, g_hRecordings.Length, sFilePath[iFilePart+1]);
+					CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}%t %d/%d: %s", "Load", g_hRecordings.Length - g_hPlaybackQueue.Length, g_hRecordings.Length, sFilePath[iFilePart+1]);
 				}
 				
 				if (g_iRecording.Repo && !FileExists(sFilePath)) {
@@ -888,7 +888,7 @@ public void OnGameFrame() {
 					FetchRecording(g_iRecording);
 				} else if (!LoadFrames(g_iRecording)) {
 					if (g_hDebug.BoolValue)
-						CPrintToChatAll("{dodgerblue}[jb] {white}%t", "Cannot File Read");
+						CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}%t", "Cannot File Read");
 					g_iRecBufferIdx = 0;
 					g_iRecording = NULL_RECORDING;
 					return;
@@ -936,7 +936,7 @@ public void OnGameFrame() {
 				findTargetFollow();
 
 				if (g_hDebug.BoolValue) {
-					CPrintToChatAll("{dodgerblue}[jb] {white}%t", "Playback Stop");
+					CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}%t", "Playback Stop");
 				}
 			}
 
@@ -1653,7 +1653,7 @@ public int Native_PlayRecordingQueueClient(Handle hPlugin, int iArgC) {
 
 public Action cmdGrantAccess(int iClient, int iArgC) {
 	if (iArgC < 1) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t: jb_grant <%t>", "Usage", "Name");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: jb_grant <%t>", "Usage", "Name");
 		return Plugin_Handled;
 	}
 
@@ -1669,14 +1669,14 @@ public Action cmdGrantAccess(int iClient, int iArgC) {
 	
 	char sUserName[32];
 	GetClientName(iTarget, sUserName, sizeof(sUserName));
-	CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Recorder Access Granted", sUserName);
+	CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Access Granted", sUserName);
 	
 	return Plugin_Handled;
 }
 
 public Action cmdRevokeAccess(int iClient, int iArgC) {
 	if (iArgC < 1) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t: jb_revoke <%t>", "Usage", "Name");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: jb_revoke <%t>", "Usage", "Name");
 		return Plugin_Handled;
 	}
 	
@@ -1692,21 +1692,21 @@ public Action cmdRevokeAccess(int iClient, int iArgC) {
 	
 	char sUserName[32];
 	GetClientName(iTarget, sUserName, sizeof(sUserName));
-	CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Recorder Access Revoked", sUserName);
+	CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Access Revoked", sUserName);
 	
 	return Plugin_Handled;
 }
 
 public Action cmdRecord(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 
 	if (g_iClientInstruction == INST_RECD) {
 		if (g_iClientOfInterest == iClient) {
 			doFullStop();
-			CPrintToChat(iClient, "{dodgerblue}[jb] {white}%t {white}(%d %t)", "Rec Stop", g_iRecBufferFrame, "Frames");
+			CPrintToChat(iClient, "{green}[{lightgreen}jb{green}]{white}}%t {white}(%d %t)", "Rec Stop", g_iRecBufferFrame, "Frames");
 			g_iClientOfInterest = 0;
 			
 			if (!g_bLocked) {
@@ -1715,7 +1715,7 @@ public Action cmdRecord(int iClient, int iArgC) {
 		} else {
 			char sUserName[32];
 			GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
-			CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t: %s", "Recorder Using", sUserName);
+			CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: %s", "Recorder Using", sUserName);
 		}
 		return Plugin_Handled;	
 	}
@@ -1779,21 +1779,21 @@ public Action cmdRecord(int iClient, int iArgC) {
 
 	g_iRecording = iRec;
 	
-	CPrintToChat(iClient, "{dodgerblue}[jb] {white}%t", "Rec Start");
+	CPrintToChat(iClient, "{green}[{lightgreen}jb{green}]{white}%t", "Rec Start");
 	
 	return Plugin_Handled;
 }
 
 public Action cmdPlay(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 
 	if ((g_iClientInstruction == INST_RECD || g_iClientInstruction & INST_PLAY) && (g_iClientOfInterest > 0 && g_iClientOfInterest != iClient)) {
 		char  sUserName[32];
 		GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Recorder Using", sUserName);
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Using", sUserName);
 		return Plugin_Handled;
 	}
 
@@ -1803,7 +1803,7 @@ public Action cmdPlay(int iClient, int iArgC) {
 		case 0: {
 			if (!iRecording) {
 				// TODO: Translate
-				CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Nothing to replay");
+				CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Nothing to replay");
 				return Plugin_Handled;
 			}
 		}
@@ -1818,14 +1818,14 @@ public Action cmdPlay(int iClient, int iArgC) {
 
 			if (iRecID >= g_hRecordings.Length) {
 				// TODO: Translate
-				CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Invalid recording ID");
+				CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Invalid recording ID");
 				return Plugin_Handled;
 			}
 
 			iRecording = g_hRecordings.Get(iRecID);
 			if (!LoadFrames(iRecording)) {
 				// TODO: Translate
-				CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Failed to load recording file");
+				CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Failed to load recording file");
 				return Plugin_Handled;
 			}
 		}
@@ -1852,9 +1852,9 @@ public Action cmdPlay(int iClient, int iArgC) {
 	SetAllBubbleAlpha(50);
 		
 	if (g_hDebug.BoolValue) {
-		CPrintToChatAll("{dodgerblue}[jb] {white}%t", "Playback Start");
+		CPrintToChatAll("{green}[{lightgreen}jb{green}]{white}%t", "Playback Start");
 	} else {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Playback Start");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}]{white}%t", "Playback Start");
 	}
 
 	return Plugin_Handled;
@@ -1862,7 +1862,7 @@ public Action cmdPlay(int iClient, int iArgC) {
 
 public Action cmdSave(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 	
@@ -1871,7 +1871,7 @@ public Action cmdSave(int iClient, int iArgC) {
 	}
 	
 	if (g_iClientInstruction != INST_NOP) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Terminated");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Terminated");
 		
 		if (g_iClientInstruction == INST_RECD) {
 			g_iClientOfInterest = 0;
@@ -1883,7 +1883,7 @@ public Action cmdSave(int iClient, int iArgC) {
 	g_iRecBufferIdx = 0;
 	
 	if (g_iRecBufferUsed == 0) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t (%t: 0)", "Cannot File Write", "Frames");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t (%t: 0)", "Cannot File Write", "Frames");
 		return Plugin_Handled;
 	}
 	
@@ -1901,16 +1901,16 @@ public Action cmdSave(int iClient, int iArgC) {
 	Format(sPath, sizeof(sPath), "%s/%s-%s.jmp", sPath, sMapName, sDate);
 
 	if (!SaveFile(sPath)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t: %s", "Cannot File Write", sPath);
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: %s", "Cannot File Write", sPath);
 	}
 
 	char sSteamID[32];
 	GetClientAuthId(iClient, AuthId_Steam3, sSteamID, sizeof(sSteamID));
 	
 	if (g_hDebug.BoolValue) {
-		CPrintToChatAll("{dodgerblue}[jb] {white}%t", "Playback Saved", g_iRecording.Frames.Length, sSteamID);
+		CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}%t", "Playback Saved", g_iRecording.Frames.Length, sSteamID);
 	} else {
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}%t", "Playback Saved", g_iRecording.Frames.Length, sSteamID);
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Playback Saved", g_iRecording.Frames.Length, sSteamID);
 	}
 
 	Recording.Destroy(g_iRecording);
@@ -1925,7 +1925,7 @@ public Action cmdSave(int iClient, int iArgC) {
 
 public Action cmdStateSave(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 	
@@ -1934,19 +1934,19 @@ public Action cmdStateSave(int iClient, int iArgC) {
 	}
 
 	if (!(g_iClientInstruction & INST_RECD)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Cannot save state while not recording");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Cannot save state while not recording");
 		return Plugin_Handled;
 	}
 
 	if (iClient != g_iClientOfInterest) {
 		char sUserName[32];
 		GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}%t", "Recorder Using", sUserName);
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Using", sUserName);
 		return Plugin_Handled;
 	}
 	
 	if (g_iRecBufferUsed == 0) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t (%t: 0)", "Cannot File Write", "Frames");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t (%t: 0)", "Cannot File Write", "Frames");
 		return Plugin_Handled;
 	}
 	
@@ -1973,7 +1973,7 @@ public Action cmdStateSave(int iClient, int iArgC) {
 
 		iSlot = StringToInt(sArg1);
 		if (iSlot <= 0) {
-			CPrintToChat(iClient, "{dodgerblue}[jb] {white}Invalid state slot number");
+			CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Недопустимый номер слота состояния");
 			return Plugin_Handled;
 		}
 
@@ -1981,10 +1981,10 @@ public Action cmdStateSave(int iClient, int iArgC) {
 	}
 	
 	if (SaveFile(sPathTemp)) {
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}Saved state to slot %d (%d frames)", iSlot, g_hRecBufferFrames.Length);
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Сохраненное состояние в слоте %d (%d frames)", iSlot, g_hRecBufferFrames.Length);
 		g_iStateLoadLast = iSlot;
 	} else {
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}%t: %s", "Cannot File Write", sPathTemp);
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t: %s", "Cannot File Write", sPathTemp);
 	}
 	
 	return Plugin_Handled;
@@ -1992,7 +1992,7 @@ public Action cmdStateSave(int iClient, int iArgC) {
 
 public Action cmdStateLoad(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 	
@@ -2001,14 +2001,14 @@ public Action cmdStateLoad(int iClient, int iArgC) {
 	}
 
 	if (g_iClientInstruction != INST_RECD) {
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}Cannot load state while not recording");
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Невозможно загрузить состояние при отсутствии записи");
 		return Plugin_Handled;
 	}
 
 	if (iClient != g_iClientOfInterest) {
 		char sUserName[32];
 		GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}%t", "Recorder Using", sUserName);
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Using", sUserName);
 		return Plugin_Handled;
 	}
 
@@ -2032,7 +2032,7 @@ public Action cmdStateLoad(int iClient, int iArgC) {
 
 		int iSaveID = StringToInt(sArg1);
 		if (iSaveID <= 0) {
-			CPrintToChat(iClient, "{dodgerblue}[jb] {white}Invalid state slot number");
+			CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Недопустимый номер слота состояния");
 			return Plugin_Handled;
 		}
 
@@ -2050,16 +2050,16 @@ public Action cmdStateLoad(int iClient, int iArgC) {
 			iRecording.SetFilePath(sFilePath);
 
 			if (LoadState(iRecording)) {
-				CPrintToChat(iClient, "{dodgerblue}[jb] {white}Load state slot %d (%d frames)", iSaveID, g_hRecBufferFrames.Length);
+				CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Загрузить слот с состоянием %d (%d frames)", iSaveID, g_hRecBufferFrames.Length);
 				g_iClientOfInterest = iClient;
 				g_iStateLoadLast = iSaveID;
 				g_hRecordingClients.Push(iClient);
 			} else {
-				CPrintToChat(iClient, "{dodgerblue}[jb] {white}Failed to load state slot %d", iSaveID);
+				CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Не удалось загрузить слот с состоянием %d", iSaveID);
 				g_iClientOfInterest = -1;
 			}
 		} else {
-			CPrintToChat(iClient, "{dodgerblue}[jb] {white}No such state slot %d", iSaveID);
+			CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Нет такого слота состояния %d", iSaveID);
 		}
 	}
 
@@ -2073,7 +2073,7 @@ public Action cmdStateLoadLast(int iClient, int iArgC) {
 
 public Action cmdStateDelete(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 
@@ -2098,7 +2098,7 @@ public Action cmdStateDelete(int iClient, int iArgC) {
 
 		int iSaveID = StringToInt(sArg1);
 		if (iSaveID <= 0) {
-			CPrintToChat(iClient, "{dodgerblue}[jb] {white}Invalid state slot number");
+			CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Неверный номер слота состояния");
 			return Plugin_Handled;
 		}
 
@@ -2111,10 +2111,10 @@ public Action cmdStateDelete(int iClient, int iArgC) {
 
 		if (FileExists(sFilePath)) {
 			if (DeleteFile(sFilePath)) {
-				CPrintToChat(iClient, "{dodgerblue}[jb] {white}Deleted state slot %d", iSaveID);
+				CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Удалённый слот состояния %d", iSaveID);
 			}
 		} else {
-			CPrintToChat(iClient, "{dodgerblue}[jb] {white}No such state slot %d", iSaveID);
+			CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Нет такого слота состояния %d", iSaveID);
 		}
 	}
 
@@ -2123,7 +2123,7 @@ public Action cmdStateDelete(int iClient, int iArgC) {
 
 public Action cmdList(int iClient, int iArgC) {
 	// TODO: Translate
-	CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Found %d recordings.%s", g_hRecordings.Length, GetCmdReplySource() == SM_REPLY_TO_CHAT ? "  See console for output." : NULL_STRING);
+	CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Найдено %d записей.%s", g_hRecordings.Length, GetCmdReplySource() == SM_REPLY_TO_CHAT ? "  See console for output." : NULL_STRING);
 
 	if (g_hRecordings.Length) {
 		DataPack hPack = new DataPack();
@@ -2193,11 +2193,11 @@ public Action Timer_RecList(Handle hTimer, any aData) {
 
 public Action cmdNearby(int iClient, int iArgC) {
 	if (!g_hRecordings.Length) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Rec");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Rec");
 		return Plugin_Handled;
 	}
 
-	CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t...", "List Nearby");
+	CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t...", "List Nearby");
 	
 	float fPos[3];
 	GetClientEyePosition(iClient, fPos);
@@ -2256,12 +2256,12 @@ public Action cmdNearby(int iClient, int iArgC) {
 
 public Action cmdLoad(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 
 	if (g_iClientInstruction != INST_NOP) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Terminated");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Terminated");
 		doFullStop();
 	}
 	
@@ -2272,7 +2272,7 @@ public Action cmdLoad(int iClient, int iArgC) {
 
 public Action cmdDelete(int iClient, int iArgC) {
 	if (iArgC != 1) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Usage Delete");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Usage Delete");
 		return Plugin_Handled;
 	}
 	
@@ -2281,12 +2281,12 @@ public Action cmdDelete(int iClient, int iArgC) {
 	
 	int iID = StringToInt(sArg1);
 	if (iID == 0 && sArg1[0] != '0' || iID < 0 || iID >= g_hRecordings.Length) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Invalid ID");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Invalid ID");
 	} else {
 		Recording iRecording = g_hRecordings.Get(iID);
 
 		if (iRecording.Repo) {
-			CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Cannot Delete Repo");
+			CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Cannot Delete Repo");
 			return Plugin_Handled;
 		}
 
@@ -2307,7 +2307,7 @@ public Action cmdDelete(int iClient, int iArgC) {
 		RenameFile(sFilePathTrash, sFilePath);
 		
 		LogMessage("%T '%s' > '%s'", "Deleted Rec", LANG_SERVER, sFilePath, sFilePathTrash);
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t: %s", "Deleted Rec", sFilePath[iFilePart+1]);
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: %s", "Deleted Rec", sFilePath[iFilePart+1]);
 
 		RemoveAllModels();
 		LoadRecordings(true);
@@ -2318,17 +2318,17 @@ public Action cmdDelete(int iClient, int iArgC) {
 
 public Action cmdPlayAll(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 
 	if (!g_hRecordings.Length) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Rec");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Rec");
 		return Plugin_Handled;
 	}
 	
 	if (g_iClientInstruction != INST_NOP) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Terminated");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Terminated");
 	}
 	
 	doFullStop();
@@ -2352,7 +2352,7 @@ public Action cmdPlayAll(int iClient, int iArgC) {
 
 		if (iRecID >= g_hRecordings.Length) {
 			// TODO: Translate
-			CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Invalid recording ID");
+			CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Invalid recording ID");
 			return Plugin_Handled;
 		}
 	}
@@ -2391,17 +2391,17 @@ public Action cmdPlayAll(int iClient, int iArgC) {
 
 public Action cmdRewind(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 	
 	if (!(g_iClientInstruction & (INST_RECD | INST_PLAY))) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Cannot use outside of playback or recording");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Cannot use outside of playback or recording");
 		return Plugin_Handled;
 	}
 
 	if (g_fSpeed[iClient] < 1.0) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Cannot use while in slow motion.");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Cannot use while in slow motion.");
 		return Plugin_Handled;	
 	}
 
@@ -2409,7 +2409,7 @@ public Action cmdRewind(int iClient, int iArgC) {
 		g_iRecBufferIdx = 0;
 		g_iRecBufferFrame = 0;
 
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}Rewinded to beginning");
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Перемотано на начало");
 	} else {
 		char sArg1[32];
 		GetCmdArg(1, sArg1, sizeof(sArg1));
@@ -2428,7 +2428,7 @@ public Action cmdRewind(int iClient, int iArgC) {
 		g_iRecBufferIdx = g_hRecBufferFrames.Get(iGotoFrame - g_hRewindWaitFrames.IntValue);
 		RespawnFrameRecEnt(iGotoFrame - g_hRewindWaitFrames.IntValue);
 
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}Rewinded %d frames", iFrames);
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Отмотано %d кадров", iFrames);
 
 		for (int i=g_hRecBufferFrames.Length-1; i>iGotoFrame; i--) {
 			g_hRecBufferFrames.Erase(i);
@@ -2450,12 +2450,12 @@ public Action cmdRewind(int iClient, int iArgC) {
 
 public Action cmdStop(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 	
 	if (g_iClientInstruction != INST_NOP) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Terminated");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Terminated");
 		if (g_iClientInstruction == INST_PLAY && g_iRecording) {
 			ResetBubbleRotation(g_iRecording);
 		}
@@ -2470,18 +2470,18 @@ public Action cmdStop(int iClient, int iArgC) {
 
 public Action cmdPause(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 
 	// TODO: Translate
 	if (!(g_iClientInstruction & (INST_RECD | INST_PLAY))) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Cannot use outside of playback or recording");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Cannot use outside of playback or recording");
 		return Plugin_Handled;
 	}
 
 	if (g_fSpeed[iClient] < 1.0) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Cannot use while in slow motion.");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Cannot use while in slow motion.");
 		return Plugin_Handled;	
 	}
 
@@ -2524,24 +2524,24 @@ public Action cmdPause(int iClient, int iArgC) {
 	}
 	
 	// TODO: Translate
-	CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%s", (g_iClientInstruction & INST_PAUSE) ? "Paused" : "Unpaused");
+	CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%s", (g_iClientInstruction & INST_PAUSE) ? "Paused" : "Unpaused");
 
 	return Plugin_Handled;
 }
 
 public Action cmdSkip(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 
 	if (!(g_iClientInstruction & INST_PLAY)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Cannot use outside of playback");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Cannot use outside of playback");
 		return Plugin_Handled;
 	}
 
 	if (iArgC != 1) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t: jb_skip <%t>", "Usage", "Frame");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: jb_skip <%t>", "Usage", "Frame");
 		return Plugin_Handled;
 	}
 
@@ -2552,36 +2552,36 @@ public Action cmdSkip(int iClient, int iArgC) {
 	// TODO: Translate
 	int iFrame = StringToInt(sArg1);
 	if (iFrame < 0) {
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}Invalid frame number");
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Некорректный номер кадра");
 		return Plugin_Handled;
 	}
 
 	if (iFrame >= g_hRecBufferFrames.Length) {
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}Frame number exceeds buffer length (%d)", g_hRecBufferFrames.Length);
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Количество кадров превышает длину буфера (%d)", g_hRecBufferFrames.Length);
 		return Plugin_Handled;
 	}
 
 	g_iRecBufferIdx = g_hRecBufferFrames.Get(iFrame);
 	RespawnFrameRecEnt(iFrame);
 
-	CPrintToChat(iClient, "{dodgerblue}[jb] {white}Skipped to frame %d", iFrame);
+	CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Переход к кадру %d", iFrame);
 
 	return Plugin_Handled;
 }
 
 public Action cmdSkipTime(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 
 	if (!(g_iClientInstruction & INST_PLAY)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}Cannot use outside of playback");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}Невозможно использовать вне воспроизведения");
 		return Plugin_Handled;
 	}
 
 	if (iArgC < 1 || iArgC > 3) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t: jb_skiptime [hours] [minutes] <seconds>", "Usage");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: jb_skiptime [hours] [minutes] <seconds>", "Usage");
 		return Plugin_Handled;
 	}
 
@@ -2622,7 +2622,7 @@ public Action cmdSkipTime(int iClient, int iArgC) {
 	if (iFrame >= g_hRecBufferFrames.Length) {
 		ToTimeDisplay(sTimeRec, sizeof(sTimeRec), g_hRecBufferFrames.Length/66);
 
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}Frame number exceeds buffer (%s)", sTimeRec);
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Количество кадров превышает объем буфера (%s)", sTimeRec);
 		return Plugin_Handled;
 	}
 
@@ -2631,7 +2631,7 @@ public Action cmdSkipTime(int iClient, int iArgC) {
 
 	ToTimeDisplay(sTimeRec, sizeof(sTimeRec), iFrame/66);
 
-	CPrintToChat(iClient, "{dodgerblue}[jb] {white}Skipped to %s", sTimeRec);
+	CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Пропущено до %s", sTimeRec);
 
 	return Plugin_Handled;
 }
@@ -2640,7 +2640,7 @@ public Action cmdSkipTime(int iClient, int iArgC) {
 /*
 public Action cmdTrim(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 	
@@ -2670,7 +2670,7 @@ public Action cmdTrim(int iClient, int iArgC) {
 	}
 	
 	if (bUseError) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t: jb_trim <A> <B> (0 ≥ A, B ≤ 0, A-B ≤ %t = %d)", "Usage", "Frames", g_iShadowBufferUsed);
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: jb_trim <A> <B> (0 ≥ A, B ≤ 0, A-B ≤ %t = %d)", "Usage", "Frames", g_iShadowBufferUsed);
 	}
 	
 	return Plugin_Handled;
@@ -2679,16 +2679,16 @@ public Action cmdTrim(int iClient, int iArgC) {
 
 public Action cmdToggleLock(int iClient, int iArgs) {
 	if (!checkAccess(iClient)) {
-			CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+			CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 			return Plugin_Handled;
 	}
 		
 	g_bLocked = !g_bLocked;
 	if (g_bLocked) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Bot Locked");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Bot Locked");
 		SetAllBubbleAlpha(50);
 	} else {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Bot Unlocked");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Bot Unlocked");
 		SetAllBubbleAlpha(255);
 	}
 	
@@ -2697,18 +2697,18 @@ public Action cmdToggleLock(int iClient, int iArgs) {
 
 public Action cmdShow(int iClient, int iArgC) {
 	if (g_bLocked) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Bot Locked");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Bot Locked");
 		return Plugin_Handled;
 	}
 	
 	if (iArgC != 1 && iArgC != 2) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t: sm_show <%t>", "Usage", "Name");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: sm_show <%t>", "Usage", "Name");
 		return Plugin_Handled;
 	}
 	if (g_iClientInstruction != INST_NOP) {
 		char sUserName[32];
 		GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Recorder Using", sUserName);
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Using", sUserName);
 		return Plugin_Handled;
 	}
 	
@@ -2721,8 +2721,8 @@ public Action cmdShow(int iClient, int iArgC) {
 		
 		char sUserName[32];
 		GetClientName(iTarget, sUserName, sizeof(sUserName));
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Show To", sUserName);
-		CPrintToChat(iTarget, "{dodgerblue}[jb] {white}%t", "Show Current");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Show To", sUserName);
+		CPrintToChat(iTarget, "{green}[{lightgreen}jb{green}] {white}%t", "Show Current");
 	}
 	
 	return Plugin_Handled;
@@ -2730,24 +2730,24 @@ public Action cmdShow(int iClient, int iArgC) {
 
 public Action cmdShowMe(int iClient, int iArgC) {
 	if (g_bLocked) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Bot Locked");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Bot Locked");
 		return Plugin_Handled;
 	}
 	
 	if (g_bCoreAvailable && GetBlockEquip(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 
 	if (g_iClientInstruction & INST_RECD) {
 		char sUserName[32];
 		GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}%t", "Recorder Using", sUserName);
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Using", sUserName);
 		return Plugin_Handled;
 	}
 	
 	if (TF2_GetClientTeam(iClient) > TFTeam_Spectator && !(GetEntityFlags(iClient) & FL_ONGROUND)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Cannot Call Air");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Cannot Call Air");
 		return Plugin_Handled;
 	}
 	
@@ -2808,13 +2808,13 @@ public Action cmdShowMe(int iClient, int iArgC) {
 		if (iFind != FOUND_RECORDING) {
 			switch (iFind) {
 				case NO_RECORDING: {
-					CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Rec Map");
+					CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Rec Map");
 				}
 				case NO_CLASS_RECORDING: {
-					CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Rec Class");
+					CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Rec Class");
 				}
 				case NO_NEARBY_RECORDING: {
-					CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Nearby");
+					CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Nearby");
 				}
 			}
 			
@@ -2874,7 +2874,7 @@ void doShowMe(int iClient, Recording iRecording, TFTeam iTeam, Obs_Mode iMode) {
 		g_iClientInstruction = INST_WAIT; // Wait for download completion
 		
 		if (g_hDebug.BoolValue) {
-			CPrintToChat(iClient, "{dodgerblue}[jb] {white}File %s", !bFileExists ? "does not exist" : "is downloading");
+			CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Файл %s", !bFileExists ? "отсутствует" : "загружается");
 		}
 		
 		if (!iRecording.Downloading) {
@@ -2882,7 +2882,7 @@ void doShowMe(int iClient, Recording iRecording, TFTeam iTeam, Obs_Mode iMode) {
 		}
 	} else {
 		if (!(LoadRecording(iRecording) && PrepareBots(iRecording) && LoadFrames(iRecording))) {
-			CPrintToChat(iClient, "{dodgerblue}[jb] {white}%t", "Cannot File Read");
+			CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Cannot File Read");
 			return;
 		}
 
@@ -2895,9 +2895,9 @@ void doShowMe(int iClient, Recording iRecording, TFTeam iTeam, Obs_Mode iMode) {
 	}
 
 	if (g_hDebug.BoolValue) {
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}%t: %s", "Playing Closest", sFilePath);
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t: %s", "Playing Closest", sFilePath);
 	} else {
-		CPrintToChat(iClient, "{dodgerblue}[jb] {white}%t", "Playing Closest");
+		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Playing Closest");
 	}
 	
 	g_iClientOfInterest = iClient;
@@ -2974,16 +2974,16 @@ void doShowMe(int iClient, Recording iRecording, TFTeam iTeam, Obs_Mode iMode) {
 
 public Action cmdChdir(int iClient, int iArgC) {
 	if (!checkAccess(iClient)) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "No Access");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "No Access");
 		return Plugin_Handled;
 	}
 
 	if (iArgC == 0) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Rec Folder", g_sRecSubDir);
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Rec Folder", g_sRecSubDir);
 	}
 	
 	if (iArgC != 1) {
-		CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Usage Chdir");
+		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Usage Chdir");
 		return Plugin_Handled;
 	}
 	
@@ -2994,7 +2994,7 @@ public Action cmdChdir(int iClient, int iArgC) {
 		strcopy(g_sRecSubDir, sizeof(g_sRecSubDir), RECORD_FOLDER);
 	} else {
 		if (StrContains(sArg1[0], ".") != -1 || StrContains(sArg1[0], "/") != -1) {
-			CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Illegal Char");
+			CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Illegal Char");
 			return Plugin_Handled;
 		}
 		
@@ -3004,7 +3004,7 @@ public Action cmdChdir(int iClient, int iArgC) {
 	RemoveAllModels();
 	LoadRecordings(true);
 	
-	CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Rec Chdir", g_sRecSubDir);
+	CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Rec Chdir", g_sRecSubDir);
 	
 	return Plugin_Handled;
 }
@@ -3049,7 +3049,7 @@ public Action cmdOptions(int iClient, int iArgC) {
 }
 
 public Action cmdUpgrade(int iClient, int iArgC) {
-	CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t", "Running Upgrade");
+	CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Running Upgrade");
 	LogMessage("%T", "Running Upgrade", LANG_SERVER);
 	
 	char sRecordingFolder[PLATFORM_MAX_PATH];
@@ -3438,7 +3438,7 @@ public Action Hook_StartTouchInfo(int iEntity, int iOther) {
 		if (g_hDebug.BoolValue && (iEntityRef != g_eLastBubbleTime[iOther].iEnt || GetTime()-g_eLastBubbleTime[iOther].iTime > 10)) {
 			char sFilePath[PLATFORM_MAX_PATH];
 			iRecording.GetFilePath(sFilePath, sizeof(sFilePath));
-			CPrintToChat(iOther, "{dodgerblue}[jb] {white}ID: %d | %t | %s %t (%s) | %t: %s | %t:\n	%s", iRecID, (iRecording.Repo ? "Repository" : "Local"), sClass, "Recording", sTimeTotal, "Author", sAuthID, "File", sFilePath);
+			CPrintToChat(iOther, "{green}[{lightgreen}jb{green}] {white}ID: %d | %t | %s %t (%s) | %t: %s | %t:\n	%s", iRecID, (iRecording.Repo ? "Repository" : "Local"), sClass, "Recording", sTimeTotal, "Author", sAuthID, "File", sFilePath);
 		}
 
 		g_eLastBubbleTime[iOther].iEnt = iEntityRef;
@@ -4518,7 +4518,7 @@ bool LoadFrames(Recording iRecording) {
 	
 	if (g_hDebug.BoolValue) {
 		int iFilePart = FindCharInString(sFilePath, '/', true);
-		CPrintToChatAll("{dodgerblue}[jb] {white}%t: %s (%s)", "Load", sFilePath[iFilePart+1], FileExists(sFilePath) ? "exists" : "notfound");
+		CPrintToChatAll("{green}[{lightgreen}jb{green}] {white}%t: %s (%s)", "Load", sFilePath[iFilePart+1], FileExists(sFilePath) ? "exists" : "notfound");
 	}
 	
 	if (!FileExists(sFilePath)) {
@@ -4821,7 +4821,7 @@ void ResetBubbleRotation(Recording iRecording) {
 bool SaveFile(char[] sFilePath) {
 	File hFile = OpenFile(sFilePath, "wb");
 	if (hFile == null) {
-		//CReplyToCommand(iClient, "{dodgerblue}[jb] {white}%t: %s", "Cannot File Write", sPath);
+		//CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: %s", "Cannot File Write", sPath);
 		return false;
 	}
 	

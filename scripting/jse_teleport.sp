@@ -84,7 +84,7 @@ void BringPlayer(int iClient, int iTarget, float fPos[3], bool bNotify=true) {
 	TeleportEntity(iTarget, fPos, NULL_VECTOR, view_as<float>({0.0, 0.0, 0.0}));
 
 	if (bNotify) {
-		CPrintToChat(iTarget, "{dodgerblue}[jse] {white}You have been teleported to {limegreen}%N{white}.", iClient);
+		CPrintToChat(iTarget, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы телепортированы в {limegreen}%N{white}.", iClient);
 	}
 }
 
@@ -111,12 +111,12 @@ void GotoPlayer(int iClient, int iTarget, bool bNotify=true) {
 
 			char sBuffer[256];
 			GetCourseCheckpointDisplayName(iCourse, iJumpNumber, bControlPoint, sBuffer, sizeof(sBuffer));
-			CPrintToChat(iClient, "{dodgerblue}[jse] {white}You have been teleported to {limegreen}%N {white}on {yellow}%s{white}.", iTarget, sBuffer);
+			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы телепортированы в {limegreen}%N {white}on {yellow}%s{white}.", iTarget, sBuffer);
 		} else {
-			CPrintToChat(iClient, "{dodgerblue}[jse] {white}You have been teleported to {limegreen}%N{white}.", iTarget);	
+			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы телепортированы в {limegreen}%N{white}.", iTarget);	
 		}
 
-		CPrintToChat(iTarget, "{dodgerblue}[jse] {limegreen}%N {white}has teleported to you.", iClient);
+		CPrintToChat(iTarget, "{green}[{lightgreen}Jump Essentials{green}]%N {white}телепортировался к вам.", iClient);
 	}
 }
 
@@ -137,7 +137,7 @@ void GotoJump(int iClient, Course iCourse, int iJumpNumber, bool bNotify=true) {
 	GetCourseCheckpointDisplayName(iCourse, iJumpNumber, false, sBuffer, sizeof(sBuffer));
 
 	if (bNotify) {
-		CPrintToChat(iClient, "{dodgerblue}[jse] {white}You have been teleported to {yellow}%s{white}.", sBuffer);
+		CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы телепортированы в {yellow}%s{white}.", sBuffer);
 	}
 }
 
@@ -156,7 +156,7 @@ void GotoControlPoint(int iClient, Course iCourse, bool bNotify=true) {
 	GetCourseCheckpointDisplayName(iCourse, 0, true, sBuffer, sizeof(sBuffer));
 
 	if (bNotify) {
-		CPrintToChat(iClient, "{dodgerblue}[jse] {white}You have been teleported to {yellow}%s{white}.", sBuffer);
+		CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы телепортированы в {yellow}%s{white}.", sBuffer);
 	}
 }
 
@@ -191,7 +191,7 @@ bool CheckProgress(int iClient, int iCourseNumber, int iJumpNumber, bool bContro
 bool CheckSafeTeleportTarget(int iClient, int iTarget, bool bNotify=true) {
 	if (!(IsClientInGame(iTarget) && IsPlayerAlive(iTarget))) {
 		if (bNotify) {
-			CPrintToChat(iClient, "{dodgerblue}[jse] {white}%t", "Target must be alive");
+			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}%t", "Target must be alive");
 		}
 
 		return false;
@@ -203,7 +203,7 @@ bool CheckSafeTeleportTarget(int iClient, int iTarget, bool bNotify=true) {
 
 	if (GetClientTeam(iTarget) != GetClientTeam(iClient)) {
 		if (bNotify) {
-			CPrintToChat(iClient, "{dodgerblue}[jse] {white}Player team does not match.");
+			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Команда игрока не соответствует.");
 		}
 
 		return false;
@@ -212,7 +212,7 @@ bool CheckSafeTeleportTarget(int iClient, int iTarget, bool bNotify=true) {
 	if (!(CheckCommandAccess(iClient, JUMPS_OVERRIDE, ADMFLAG_GENERIC) && g_hCVGotoPlayerClass.BoolValue) && 
 		TF2_GetPlayerClass(iTarget) != TF2_GetPlayerClass(iClient)) {
 		if (bNotify) {
-			CPrintToChat(iClient, "{dodgerblue}[jse] {white}Player class does not match.");
+			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Класс игрока не соответствует.");
 		}
 		
 		return false;
@@ -256,7 +256,7 @@ public Action cmdBring(int iClient, int iArgC) {
 	}
 
 	if (iTargetCount > 1 && !CheckCommandAccess(iClient, MULTITARGET_OVERRIDE, ADMFLAG_GENERIC)) {
-		ReplyToCommand(iClient, "{dodgerblue}[jse] {white}You do not have permission to multi-target.");
+		ReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}You do not have permission to multi-target.");
 		return Plugin_Handled;
 	}
 
@@ -272,9 +272,9 @@ public Action cmdBring(int iClient, int iArgC) {
 	}
 
 	if (bTnIsML) {
-		CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Teleported {limegreen}%t {white}to aim.", sTargetName);
+		CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%t {white}to aim.", sTargetName);
 	} else {
-		CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Teleported {limegreen}%s {white}to aim.", sTargetName);
+		CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%s {white}to aim.", sTargetName);
 	}
 
 	return Plugin_Handled;
@@ -301,7 +301,7 @@ public Action cmdGoto(int iClient, int iArgC) {
 				}
 
 				if (!g_hCVGotoPlayerProgressed.BoolValue && !bCanTeleToPlayers) {
-					CReplyToCommand(iClient, "{dodgerblue}[jse] {white}%t", "No Access");
+					CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}%t", "No Access");
 					return Plugin_Handled;
 				}
 
@@ -326,17 +326,17 @@ public Action cmdGoto(int iClient, int iArgC) {
 							char sBuffer[256];
 							GetCourseCheckpointDisplayName(iCourse, iJumpNumber, bControlPoint, sBuffer, sizeof(sBuffer));
 
-							CPrintToChat(iClient, "{dodgerblue}[jse] {white}You have not been to {limegreen}%N{white}'s location before: {yellow}%s{white}.", iTarget, sBuffer);
+							CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы не были в {limegreen}%N{white} расположение до: {yellow}%s{white}.", iTarget, sBuffer);
 						}
 					} else {
-						CPrintToChat(iClient, "{dodgerblue}[jse] {limegreen}%N {white}is not found near any jump.", iTarget);
+						CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}]%N {white}is not found near any jump.", iTarget);
 					}
 				}
 			}
 		}
 		case 2: {
 			if (!g_hCVGotoProgressed.BoolValue && !bCanTeleToAllJumps) {
-				CReplyToCommand(iClient, "{dodgerblue}[jse] {white}%t", "No Access");
+				CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}%t", "No Access");
 				return Plugin_Handled;
 			}
 
@@ -354,7 +354,7 @@ public Action cmdGoto(int iClient, int iArgC) {
 						char sBuffer[256];
 						GetCourseCheckpointDisplayName(iCourse, iJumpNumber, true, sBuffer, sizeof(sBuffer));
 
-						CReplyToCommand(iClient, "{dodgerblue}[jse] {white}You have not yet finished {yellow}%s{white}.", sBuffer);
+						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы еще не закончили {yellow}%s{white}.", sBuffer);
 						return Plugin_Handled;
 					}
 
@@ -366,22 +366,22 @@ public Action cmdGoto(int iClient, int iArgC) {
 							char sBuffer[256];
 							GetCourseCheckpointDisplayName(iCourse, iJumpNumber, false, sBuffer, sizeof(sBuffer));
 
-							CReplyToCommand(iClient, "{dodgerblue}[jse] {white}You have not yet reached {yellow}%s{white}.", sBuffer);
+							CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы еще не достигли {yellow}%s{white}.", sBuffer);
 							return Plugin_Handled;
 						}
 
 						GotoJump(iClient, iCourse, iJumpNumber);
 					} else {
-						CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Cannot find specified jump number.");
+						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Не удается найти указанный номер перехода.");
 					}
 				}
 			} else {
-				CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Cannot find specified course number.");
+				CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Невозможно найти заданный номер курса.");
 			}
 		}
 		default: {
 			if (!(g_hCVGotoProgressed.BoolValue || bCanTeleToAllJumps || g_hCVGotoPlayerProgressed.BoolValue || bCanTeleToPlayers)) {
-				CReplyToCommand(iClient, "{dodgerblue}[jse] {white}%t", "No Access");
+				CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}%t", "No Access");
 				return Plugin_Handled;
 			}
 
@@ -427,7 +427,7 @@ public Action cmdSend(int iClient, int iArgC) {
 			}
 
 			if (iTargetCount > 1 && !CheckCommandAccess(iClient, MULTITARGET_OVERRIDE, ADMFLAG_GENERIC)) {
-				ReplyToCommand(iClient, "{dodgerblue}[jse] {white}You do not have permission to multi-target.");
+				ReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}You do not have permission to multi-target.");
 				return Plugin_Handled;
 			}
 
@@ -445,9 +445,9 @@ public Action cmdSend(int iClient, int iArgC) {
 				}
 
 				if (bTnIsML) {
-					CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Teleported {limegreen}%t {white}to {yellow}%N{white}.", sTargetName, iTarget);
+					CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%t {white}to {yellow}%N{white}.", sTargetName, iTarget);
 				} else {
-					CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Teleported {limegreen}%s {white}to {yellow}%N{white}.", sTargetName, iTarget);
+					CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%s {white}to {yellow}%N{white}.", sTargetName, iTarget);
 				}
 			}
 		}
@@ -475,7 +475,7 @@ public Action cmdSend(int iClient, int iArgC) {
 			}
 
 			if (iTargetCount > 1 && !CheckCommandAccess(iClient, MULTITARGET_OVERRIDE, ADMFLAG_GENERIC)) {
-				ReplyToCommand(iClient, "{dodgerblue}[jse] {white}You do not have permission to multi-target.");
+				ReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}You do not have permission to multi-target.");
 				return Plugin_Handled;
 			}
 
@@ -494,9 +494,9 @@ public Action cmdSend(int iClient, int iArgC) {
 					GetCourseCheckpointDisplayName(iCourse, 0, true, sBuffer, sizeof(sBuffer));
 
 					if (bTnIsML) {
-						CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Teleported {limegreen}%t {white}to {yellow}%s{white}.", sTargetName, sBuffer);
+						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%t {white}to {yellow}%s{white}.", sTargetName, sBuffer);
 					} else {
-						CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Teleported {limegreen}%s {white}to {yellow}%s{white}.", sTargetName, sBuffer);
+						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%s {white}to {yellow}%s{white}.", sTargetName, sBuffer);
 					}
 				} else {
 					Jump iJump = ResolveJumpNumber(iCourse, iJumpNumber);
@@ -508,21 +508,21 @@ public Action cmdSend(int iClient, int iArgC) {
 						GetCourseCheckpointDisplayName(iCourse, iJumpNumber, false, sBuffer, sizeof(sBuffer));
 
 						if (bTnIsML) {
-							CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Teleported {limegreen}%t {white}to {yellow}%s{white}.", sTargetName, sBuffer);
+							CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%t {white}to {yellow}%s{white}.", sTargetName, sBuffer);
 						} else {
-							CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Teleported {limegreen}%s {white}to {yellow}%s{white}.", sTargetName, sBuffer);
+							CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Teleported {limegreen}%s {white}to {yellow}%s{white}.", sTargetName, sBuffer);
 						}
 					} else {
-						CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Cannot find specified jump number.");
+						CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Cannot find specified jump number.");
 					}
 				}
 			} else {
-				CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Cannot find specified course number.");
+				CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Cannot find specified course number.");
 			}
 		}
 		default: {
-			CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Usage: sm_send <target> <to target>");
-			CReplyToCommand(iClient, "{dodgerblue}[jse] {white}Usage: sm_send <target> <course #> <jump # | 0 for end>");
+			CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Usage: sm_send <target> <to target>");
+			CReplyToCommand(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Usage: sm_send <target> <course #> <jump # | 0 for end>");
 		}
 	}
 
@@ -564,7 +564,7 @@ void SendPlayerMenu(int iClient, MenuHandler fnHandler, bool bBackButton=true, b
 		delete hPlayers;
 		
 		if (fnHandler == MenuHandler_GotoPlayer) {
-			CPrintToChat(iClient, "{dodgerblue}[jse] {white}No other players to go to.");
+			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Других игроков нет.");
 			
 			// Prevent infinite loop
 			if (IsTrackerLoaded()) {
@@ -629,7 +629,7 @@ void SendCourseMenu(int iClient, MenuHandler fnCourseHandler, MenuHandler fnJump
 		delete hProgress;
 	
 		if (!hCourseNumbers.Length) {
-			CPrintToChat(iClient, "{dodgerblue}[jse] {white}You have not been to any courses.");
+			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы не посещали никаких курсов.");
 		}
 	}
 
@@ -829,12 +829,12 @@ public int MenuHandler_GotoPlayer(Menu hMenu, MenuAction iAction, int iClient, i
 							char sBuffer[256];
 							GetCourseCheckpointDisplayName(iCourse, iJumpNumber, bControlPoint, sBuffer, sizeof(sBuffer));
 
-							CPrintToChat(iClient, "{dodgerblue}[jse] {white}You have not been to {limegreen}%N{white}'s location before: {yellow}%s{white}.", iTarget, sBuffer);
+							CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы не были в {limegreen}%N{white} местоположение до: {yellow}%s{white}.", iTarget, sBuffer);
 
 							SendPlayerMenu(iClient, MenuHandler_GotoPlayer);
 						}
 					} else {
-						CPrintToChat(iClient, "{dodgerblue}[jse] {limegreen}%N {white}is not found near any jump.", iTarget);
+						CPrintToChat(iClient, "{dodgerblue}[jse] {limegreen}%N {white}не встречается ни у одного прыжка.", iTarget);
 
 						SendPlayerMenu(iClient, MenuHandler_GotoPlayer);
 					}

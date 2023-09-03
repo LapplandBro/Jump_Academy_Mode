@@ -304,7 +304,7 @@ void SendToCheckpoint(int iClient) {
 
 	TeleportEntity(iClient, fPos, fAng, fVel);
 
-	CPrintToChat(iClient, "{dodgerblue}[jse] {white}Autosave loaded");
+	CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Загружено автосохранение");
 }
 
 void DeleteCheckpoint(int iClient) {
@@ -330,7 +330,7 @@ void DeleteCheckpoint(int iClient) {
 	for (int i=0; i<hCheckpoint.Length; i++) {
 		if (eCheckpoint.iHash == hCheckpoint.Get(i, Checkpoint::iHash)) {
 			hCheckpoint.Erase(i);
-			CPrintToChat(iClient, "{dodgerblue}[jse] {white}Autosave deleted");
+			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Автосохранение удалено");
 
 			DB_DeleteAutosave(iClient, eCheckpoint.GetCourseNumber(), eCheckpoint.GetJumpNumber(), eCheckpoint.IsControlPoint(), iTeam, iClass);
 			break;

@@ -261,7 +261,7 @@ public void MapInfoResponse_FetchFromAPI(any aData, JSONArray hMapInfoList, cons
 		if (iCaller <= 0) {
 			LogError("No map information was found");
 		} else {
-			CPrintToChat(iCaller, "{dodgerblue}[jse] {white}No map information was found.");
+			CPrintToChat(iCaller, "{green}[{lightgreen}Jump Essentials{green}] {white}Информация о карте не найдена.");
 		}
 
 		return;
@@ -382,7 +382,7 @@ public void ConVarQueryFinished_DisableHTMLMOTD(QueryCookie iCookie, int iClient
 		ShowVGUIPanel(iClient, "info", hKV);
 		delete hKV;
 	} else {
-		CPrintToChat(iClient, "{dodgerblue}[jse] {white}Enable HTML MOTD to open profile: {grey}%s", sBuffer);
+		CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Включите HTML MOTD для открытия профиля: {grey}%s", sBuffer);
 	}
 }
 
@@ -1322,7 +1322,7 @@ public int MenuHandler_MapInfo(Menu hMenu, MenuAction iAction, int iClient, int 
 					GetExcludeMapList(hExcludeNominateList);
 
 					if (hExcludeNominateList.FindString(sMapName) != -1) {
-						CPrintToChat(iClient, "{dodgerblue}[jse] {white}%t", "Map in Exclude List");
+						CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}%t", "Map in Exclude List");
 						delete hExcludeNominateList;
 						return 0;
 					}
@@ -1333,22 +1333,22 @@ public int MenuHandler_MapInfo(Menu hMenu, MenuAction iAction, int iClient, int 
 					GetCurrentMap(sCurrentMapName, sizeof(sCurrentMapName));
 
 					if (StrEqual(sMapName, sCurrentMapName, false)) {
-						CPrintToChat(iClient, "{dodgerblue}[jse] {white}%t", "Can't Nominate Current Map");
+						CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}%t", "Can't Nominate Current Map");
 					} else {
 						switch (NominateMap(sMapName, false, iClient)) {
 							case Nominate_AlreadyInVote: {
-								CPrintToChat(iClient, "{dodgerblue}[jse] {white}%t", "Map Already In Vote", sMapName);
+								CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}%t", "Map Already In Vote", sMapName);
 							}
 							case Nominate_InvalidMap: {
-								CPrintToChat(iClient, "{dodgerblue}[jse] {white}%t", "Map was not found", sMapName);
+								CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}%t", "Map was not found", sMapName);
 							}
 							case Nominate_VoteFull: {
-								CPrintToChat(iClient, "{dodgerblue}[jse] {white}%t", "Map Already Nominated", sMapName);
+								CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}%t", "Map Already Nominated", sMapName);
 							}
 							default: {
 								char sName[MAX_NAME_LENGTH];
 								GetClientName(iClient, sName, sizeof(sName));
-								CPrintToChatAll("{dodgerblue}[jse] {white}%t", "Map Nominated", sName, sMapName);
+								CPrintToChatAll("{green}[{lightgreen}Jump Essentials{green}] {white}%t", "Map Nominated", sName, sMapName);
 							}
 						}
 					}
@@ -1366,7 +1366,7 @@ public int MenuHandler_MapInfo(Menu hMenu, MenuAction iAction, int iClient, int 
 					CreateDataTimer(5.0, Timer_MapChange, hDataPack);
 					hDataPack.WriteString(sMapName);
 
-					CPrintToChatAll("{dodgerblue}[jse] {white}%t", "Changing map", sMapName);
+					CPrintToChatAll("{green}[{lightgreen}Jump Essentials{green}] {white}%t", "Changing map", sMapName);
 				}
 				// Authors
 				case 4: {
