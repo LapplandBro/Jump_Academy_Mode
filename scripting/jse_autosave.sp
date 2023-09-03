@@ -209,12 +209,12 @@ void DrawCheckpointInfo(Panel hPanel, int iCourseNumber, int iJumpNumber, bool b
 	char sBuffer[1024];
 
 	if (!GetCourseDisplayName(iCourse, sBuffer, sizeof(sBuffer))) {
-		Format(sBuffer, sizeof(sBuffer), "Курс: %s%s", sBuffer, bControlPoint ? " (END)" : NULL_STRING);
+		Format(sBuffer, sizeof(sBuffer), "Курс: %s%s", sBuffer, bControlPoint ? " (Конец)" : NULL_STRING);
 		hPanel.DrawText(sBuffer);
 	}
 
 	if (iJump) {
-		Format(sBuffer, sizeof(sBuffer), "Прыжок:   %2d/%2d", iJump.iNumber, iCourse.hJumps.Length);
+		Format(sBuffer, sizeof(sBuffer), "Прыжок:  %2d/%2d", iJump.iNumber, iCourse.hJumps.Length);
 		hPanel.DrawText(sBuffer);
 	}
 
@@ -411,7 +411,7 @@ void SendCourseListPanel(int iClient) {
 
 	ArrayList hCheckpoint = g_hAutosave[iClient][view_as<int>(iTeam)-view_as<int>(TFTeam_Red)][view_as<int>(iClass)-1];
 	if (!hCheckpoint || !hCheckpoint.Length) {
-		CReplyToCommand(iClient, "{GREEN}[{LIGHTGREEN}Jump Essentials{GREEN}]{WHITE}No autosaves were found for this class.");
+		CReplyToCommand(iClient, "{GREEN}[{LIGHTGREEN}Jump Essentials{GREEN}]{WHITE} Автосохранений не найдено за этот класс.");
 		return;
 	}
 
@@ -435,7 +435,7 @@ void SendCourseListPanel(int iClient) {
 	}
 
 	Menu hMenu = new Menu(MenuHandler_CourseList);
-	hMenu.SetTitle("Autosaved Courses");
+	hMenu.SetTitle("Автосохраненные курсы");
 
 	char sBuffer[1024];
 
@@ -455,9 +455,9 @@ void SendCourseListPanel(int iClient) {
 		}
 
 		if (iJump) {
-			Format(sBuffer, sizeof(sBuffer), "(%2d/%2d)  %s%s", iJump.iNumber, iCourse.hJumps.Length, sBuffer, sMark);
+			Format(sBuffer, sizeof(sBuffer), "(%2d/%2d) %s%s", iJump.iNumber, iCourse.hJumps.Length, sBuffer, sMark);
 		} else {
-			Format(sBuffer, sizeof(sBuffer), "(END)  %s%s", sBuffer, sMark);
+			Format(sBuffer, sizeof(sBuffer), "(Конец) %s%s", sBuffer, sMark);
 		}
 
 		char sKey[8];
