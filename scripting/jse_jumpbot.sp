@@ -367,11 +367,11 @@ public void OnPluginStart() {
 	RegConsoleCmd("jb_options", 		cmdOptions,							"Change user options"												);
 	
 	// Cookies
-	g_hCookieBubble			= RegClientCookie("jse_jb_bubble", 		"Set bot bubble visibility",	 		CookieAccess_Private);
-	g_hCookieTrail			= RegClientCookie("jse_jb_trail",		"Set bot trail visibility", 			CookieAccess_Private);
-	g_hCookieInteract		= RegClientCookie("jse_jb_interact",	"Set bot interactivity with client",	CookieAccess_Private);
-	g_hCookieSpeed			= RegClientCookie("jse_jb_speed",		"Set bot playback speed", 				CookieAccess_Private);
-	g_hCookiePerspective	= RegClientCookie("jse_jb_perspective",	"Set bot playback perspective", 		CookieAccess_Private);
+	g_hCookieBubble			= RegClientCookie("jse_jb_bubble", 		"Настройка видимости пузырьков", CookieAccess_Private);
+	g_hCookieTrail			= RegClientCookie("jse_jb_trail",		"Настройка видимости следов", CookieAccess_Private);
+	g_hCookieInteract		= RegClientCookie("jse_jb_interact",	"Настройка взаимодействия",	CookieAccess_Private);
+	g_hCookieSpeed			= RegClientCookie("jse_jb_speed",		"Настройка скорости воспроизведения", CookieAccess_Private);
+	g_hCookiePerspective	= RegClientCookie("jse_jb_perspective",	"Настройка перспективы TP/FP", CookieAccess_Private);
 	
 	g_hBotName.GetString(sBuffer, sizeof(sBuffer));
 	SetCookieMenuItem(CookieMenuHandler_Options, 0, sBuffer);
