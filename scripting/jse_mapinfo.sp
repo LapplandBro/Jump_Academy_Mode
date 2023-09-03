@@ -771,15 +771,15 @@ void ShowSettingsPanel(int iClient) {
 	char sBuffer[64];
 
 	Panel hPanel = new Panel();
-	hPanel.SetTitle("Map Info");
+	hPanel.SetTitle("Информация о карте");
 
-	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Показать текущую карту при подключении", g_bJoinMessage[iClient] ? "x" : " ");
+	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Показ текущей карты", g_bJoinMessage[iClient] ? "x" : " ");
 	hPanel.DrawItem(sBuffer);
 
-	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Использование уровней выше T6", g_bExtendedTiers[iClient] ? "x" : " ");
+	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Уровни выше T6", g_bExtendedTiers[iClient] ? "x" : " ");
 	hPanel.DrawItem(sBuffer);
 
-	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Показать результаты в виде списков", g_bListView[iClient] ? "x" : " ");
+	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Показ результатов списком", g_bListView[iClient] ? "x" : " ");
 	hPanel.DrawItem(sBuffer);
 
 	hPanel.DrawText(" ");
