@@ -411,7 +411,7 @@ void SendCourseListPanel(int iClient) {
 
 	ArrayList hCheckpoint = g_hAutosave[iClient][view_as<int>(iTeam)-view_as<int>(TFTeam_Red)][view_as<int>(iClass)-1];
 	if (!hCheckpoint || !hCheckpoint.Length) {
-		CReplyToCommand(iClient, "{dodgerblue}[jse] {white}No autosaves were found for this class.");
+		CReplyToCommand(iClient, "{GREEN}[{LIGHTGREEN}Jump Essentials{GREEN}]{WHITE}No autosaves were found for this class.");
 		return;
 	}
 
