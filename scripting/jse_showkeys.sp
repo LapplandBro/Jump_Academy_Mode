@@ -78,11 +78,11 @@ public void OnPluginStart() {
 	HookEvent("player_spawn", Event_PlayerSpawn);
 
 	// Cookies
-	g_hCookieEnabled = new Cookie("jse_showkeys_enabled", "Show keys enable toggle", CookieAccess_Private);
-	g_hCookieCoords = new Cookie("jse_showkeys_coords", "Show keys HUD coordinates", CookieAccess_Private);
-	g_hCookieColor = new Cookie("jse_showkeys_color", "Show keys HUD text color", CookieAccess_Private);
+	g_hCookieEnabled = new Cookie("jse_showkeys_enabled", "Переключить SKeys", CookieAccess_Private);
+	g_hCookieCoords = new Cookie("jse_showkeys_coords", "Настройка HUD-а", CookieAccess_Private);
+	g_hCookieColor = new Cookie("jse_showkeys_color", "Цвет SKeys в HUD-е", CookieAccess_Private);
 
-	SetCookieMenuItem(CookieMenuHandler_Options, 0, "Show Keys");
+	SetCookieMenuItem(CookieMenuHandler_Options, 0, "Показ нажатий");
 
 	g_hHudText = CreateHudSynchronizer();
 
@@ -391,13 +391,13 @@ public int Native_ResetShowKeys(Handle hPlugin, int iArgC) {
 
 public Action cmdShowKeys(int iClient, int iArgC) {
 	if (!iClient) {
-		ReplyToCommand(iClient, "[jse] You cannot run this command from server console.");
+		ReplyToCommand(iClient, "[Jump Essentials] You cannot run this command from server console.");
 		return Plugin_Handled;
 	}
 
 	if (iArgC == 0) {
 		g_bEnabled[iClient] = !g_bEnabled[iClient];
-		CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Показать кнопки %s.", g_bEnabled[iClient] ? "enabled" : "disabled");
+		CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Показ нажатий %s.", g_bEnabled[iClient] ? "включен" : "выключен");
 		g_iTarget[iClient] = 0;
 	} else {
 		char sArg1[32];
@@ -424,7 +424,7 @@ public Action cmdShowKeys(int iClient, int iArgC) {
 
 public Action cmdShowKeysCoords(int iClient, int iArgC) {
 	if (!iClient) {
-		ReplyToCommand(iClient, "[jse] You cannot run this command from server console.");
+		ReplyToCommand(iClient, "[Jump Essentials] You cannot run this command from server console.");
 		return Plugin_Handled;
 	}
 
@@ -444,7 +444,7 @@ public Action cmdShowKeysCoords(int iClient, int iArgC) {
 
 public Action cmdShowKeysColors(int iClient, int iArgC) {
 	if (!iClient) {
-		ReplyToCommand(iClient, "[jse] You cannot run this command from server console.");
+		ReplyToCommand(iClient, "[Jump Essentials] You cannot run this command from server console.");
 		return Plugin_Handled;
 	}
 
@@ -466,7 +466,7 @@ public Action cmdShowKeysColors(int iClient, int iArgC) {
 
 public Action cmdShowKeysOptions(int iClient, int iArgC) {
 	if (!iClient) {
-		ReplyToCommand(iClient, "[jse] You cannot run this command from server console.");
+		ReplyToCommand(iClient, "[Jump Essentials] You cannot run this command from server console.");
 		return Plugin_Handled;
 	}
 
@@ -476,7 +476,7 @@ public Action cmdShowKeysOptions(int iClient, int iArgC) {
 
 public Action cmdForceShowKeys(int iClient, int iArgC) {
 	if (iArgC != 2) {
-		ReplyToCommand(iClient, "[jse] Usage: sm_forceshowkeys <target> <0/1>");
+		ReplyToCommand(iClient, "[Jump Essentials] Usage: sm_forceshowkeys <target> <0/1>");
 		return Plugin_Handled;
 	}
 
