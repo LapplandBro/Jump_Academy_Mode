@@ -573,10 +573,10 @@ public void CookieMenuHandler_Options(int iClient, CookieMenuAction iAction, any
 
 void SendOptionsPanel(int iClient) {
 	Menu hMenu = new Menu(MenuHandler_Options);
-	hMenu.SetTitle("Show Keys Settings");
+	hMenu.SetTitle("Настройки показа нажатий");
 
-	hMenu.AddItem(NULL_STRING, "Move");
-	hMenu.AddItem(NULL_STRING, "Recolor");
+	hMenu.AddItem(NULL_STRING, "Передвинуть в HUD-е");
+	hMenu.AddItem(NULL_STRING, "Перекрасить");
 
 	hMenu.Display(iClient, 0);
 }
