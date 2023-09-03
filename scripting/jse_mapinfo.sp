@@ -643,7 +643,7 @@ void PrintMapInfo(JSONObject hMapInfo, bool bExtended, char[] sBuffer, int iBuff
 				} else if (i < iAuthorsLength-1) {
 					Format(sBuffer, iBufferLength, "%s, %s", sBuffer, sAuthorName);
 				} else {
-					Format(sBuffer, iBufferLength, "%s and %s", sBuffer, sAuthorName);
+					Format(sBuffer, iBufferLength, "%s и %s", sBuffer, sAuthorName);
 				}
 
 				delete hAuthor;
@@ -660,10 +660,10 @@ void PrintMapInfo(JSONObject hMapInfo, bool bExtended, char[] sBuffer, int iBuff
 	if (hMapInfo.HasKey("class")) {
 		int iClass = hMapInfo.GetInt("class");
 
-		char sClass[32];
+		char sClass[64];
 		TF2_GetClassName(view_as<TFClassType>(iClass), sClass, sizeof(sClass));
 
-		Format(sBuffer, iBufferLength, "%s\n    Class: %s", sBuffer, sClass);
+		Format(sBuffer, iBufferLength, "%s\n    Класс: %s", sBuffer, sClass);
 	}
 
 	char sTier[16];
@@ -1036,27 +1036,27 @@ void ShowMapInfoPanel(int iClient, int iTime=0, bool bShowControls=true) {
 	if (bShowControls) {
 		if (eInfoLookup.bListView) {
 			hPanel.CurrentKey = 8;
-			hPanel.DrawItem("Back");
+			hPanel.DrawItem("Назад");
 		} else {
 			if (eInfoLookup.hMapInfoList.Length > 1) {
 				hPanel.CurrentKey = 7;
-				hPanel.DrawItem("List View");
+				hPanel.DrawItem("Список");
 			}
 
 			if (eInfoLookup.iPage > 0) {
 				hPanel.CurrentKey = 8;
-				FormatEx(sBuffer, sizeof(sBuffer), "Previous (%d)", eInfoLookup.iPage);
+				FormatEx(sBuffer, sizeof(sBuffer), "Предыдущий (%d)", eInfoLookup.iPage);
 				hPanel.DrawItem(sBuffer);
 			} else if (g_hLookupStack[iClient].Length > 1) {
 				hPanel.CurrentKey = 8;
-				hPanel.DrawItem("Back");
+				hPanel.DrawItem("Назад");
 			} else {
 				hPanel.DrawText(" ");
 			}
 
 			if (eInfoLookup.iPage < eInfoLookup.hMapInfoList.Length-1) {
 				hPanel.CurrentKey = 9;
-				FormatEx(sBuffer, sizeof(sBuffer), "Next (%d)", eInfoLookup.hMapInfoList.Length-eInfoLookup.iPage-1);
+				FormatEx(sBuffer, sizeof(sBuffer), "Следующий (%d)", eInfoLookup.hMapInfoList.Length-eInfoLookup.iPage-1);
 				hPanel.DrawItem(sBuffer);
 			} else {
 				hPanel.DrawText(" ");
@@ -1256,7 +1256,7 @@ void ShowMapAuthorPanel(int iClient) {
 	hPanel.DrawText(" ");
 
 	hPanel.CurrentKey = 8;
-	hPanel.DrawItem("Back");
+	hPanel.DrawItem("Назад");
 
 	hPanel.CurrentKey = 10;
 	hPanel.DrawItem("Выход", ITEMDRAW_CONTROL);
