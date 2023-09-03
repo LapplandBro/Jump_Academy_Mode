@@ -3402,15 +3402,15 @@ public Action Hook_StartTouchInfo(int iEntity, int iOther) {
 
 				switch (iItemDefIdx) {
 					case 513:
-						strcopy(sEquipName, sizeof(sEquipName), "\nLoadout: Original");
+						strcopy(sEquipName, sizeof(sEquipName), "\nОружие: Прародитель");
 					case 730:
-						strcopy(sEquipName, sizeof(sEquipName), "\nLoadout: Beggar's Bazooka");
+						strcopy(sEquipName, sizeof(sEquipName), "\nОружие: Базука бродяги");
 				}
 			}
 		}
 		
 		if (!sAuthorName[0] && !sAuthID[0]) {
-			FormatEx(sAuthID, sizeof(sAuthID), "%T", "Unknown", iOther);
+			FormatEx(sAuthID, sizeof(sAuthID), "%T", "Неизвестно", iOther);
 		}
 
 		char sTimeTotal[32];
