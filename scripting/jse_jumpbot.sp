@@ -198,7 +198,7 @@ bool g_bShuttingDown;
 bool g_bLocked;
 bool g_bPlayerGrantAccess[MAXPLAYERS+1];
 
-char g_sRecSubDir[32];
+char g_sRecSubDir[64];
 
 ArrayList g_hRecordingBots;
 ArrayList g_hRecordingClients;
@@ -546,7 +546,7 @@ public void OnConfigsExecuted() {
 		}
 	}
 	
-	char sColor[32];
+	char sColor[64];
 	
 	g_hTrailColor.GetString(sColor, sizeof(sColor));
 	int iTrailColor = StringToInt(sColor, 16);
@@ -721,7 +721,7 @@ public void OnGameFrame() {
 
 		if (g_iRecBufferFrame % 10 == 0) {
 			char sFrameInfo[64];
-			char sTimeRec[32];
+			char sTimeRec[64];
 			
 			ToTimeDisplay(sTimeRec, sizeof(sTimeRec), g_iRecBufferFrame/66);
 
@@ -1339,8 +1339,8 @@ public Action OnPlayerRunCmd(int iClient, int &iButtons, int &iImpulse, float fV
 			}
 			
 			if ((g_iRecBufferFrame % 22) == 0 && !(g_iClientInstruction & INST_WARMUP) && g_hRecBufferFrames != null) {
-				char sTimePlay[32];
-				char sTimeTotal[32];
+				char sTimePlay[64];
+				char sTimeTotal[64];
 				
 				ToTimeDisplay(sTimePlay, sizeof(sTimePlay), g_iRecBufferFrame/66);
 				ToTimeDisplay(sTimeTotal, sizeof(sTimePlay), g_hRecBufferFrames.Length/66);
@@ -1657,7 +1657,7 @@ public Action cmdGrantAccess(int iClient, int iArgC) {
 		return Plugin_Handled;
 	}
 
-	char sArg1[32];					 
+	char sArg1[64];					 
 	GetCmdArg(1, sArg1, sizeof(sArg1));
 	
 	int iTarget = FindTarget(iClient, sArg1);
@@ -1667,7 +1667,7 @@ public Action cmdGrantAccess(int iClient, int iArgC) {
 	
 	g_bPlayerGrantAccess[iTarget] = true;
 	
-	char sUserName[32];
+	char sUserName[64];
 	GetClientName(iTarget, sUserName, sizeof(sUserName));
 	CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Access Granted", sUserName);
 	
@@ -1680,7 +1680,7 @@ public Action cmdRevokeAccess(int iClient, int iArgC) {
 		return Plugin_Handled;
 	}
 	
-	char sArg1[32];					 
+	char sArg1[64];					 
 	GetCmdArg(1, sArg1, sizeof(sArg1));
 	
 	int iTarget = FindTarget(iClient, sArg1);
@@ -1690,7 +1690,7 @@ public Action cmdRevokeAccess(int iClient, int iArgC) {
 	
 	g_bPlayerGrantAccess[iTarget] = false;
 	
-	char sUserName[32];
+	char sUserName[64];
 	GetClientName(iTarget, sUserName, sizeof(sUserName));
 	CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Access Revoked", sUserName);
 	
@@ -1713,7 +1713,7 @@ public Action cmdRecord(int iClient, int iArgC) {
 				SetAllBubbleAlpha(255);
 			}
 		} else {
-			char sUserName[32];
+			char sUserName[64];
 			GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
 			CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: %s", "Recorder Using", sUserName);
 		}
@@ -1742,7 +1742,7 @@ public Action cmdRecord(int iClient, int iArgC) {
 
 	// TODO: Bot count vs. RecClient count mismatch
 	char sClassName[128];
-	char sName[32];
+	char sName[64];
 	char sAuthID[24];
 
 	for (int i=0; i<g_hRecordingClients.Length; i++) {
@@ -1791,7 +1791,7 @@ public Action cmdPlay(int iClient, int iArgC) {
 	}
 
 	if ((g_iClientInstruction == INST_RECD || g_iClientInstruction & INST_PLAY) && (g_iClientOfInterest > 0 && g_iClientOfInterest != iClient)) {
-		char  sUserName[32];
+		char  sUserName[64];
 		GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
 		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Using", sUserName);
 		return Plugin_Handled;
@@ -1808,7 +1808,7 @@ public Action cmdPlay(int iClient, int iArgC) {
 			}
 		}
 		case 1: {
-			char sArg1[32];
+			char sArg1[64];
 			GetCmdArg(1, sArg1, sizeof(sArg1));
 			int iRecID = StringToInt(sArg1);
 
@@ -1893,10 +1893,10 @@ public Action cmdSave(int iClient, int iArgC) {
 		CreateDirectory(sPath, 509);
 	}
 	
-	char sMapName[32];
+	char sMapName[64];
 	GetCurrentMap(sMapName, sizeof(sMapName));
 	
-	char sDate[32];
+	char sDate[64];
 	FormatTime(sDate, sizeof(sDate), "%Y%m%d_%H%M%S");
 	Format(sPath, sizeof(sPath), "%s/%s-%s.jmp", sPath, sMapName, sDate);
 
@@ -1904,7 +1904,7 @@ public Action cmdSave(int iClient, int iArgC) {
 		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t: %s", "Cannot File Write", sPath);
 	}
 
-	char sSteamID[32];
+	char sSteamID[64];
 	GetClientAuthId(iClient, AuthId_Steam3, sSteamID, sizeof(sSteamID));
 	
 	if (g_hDebug.BoolValue) {
@@ -1939,7 +1939,7 @@ public Action cmdStateSave(int iClient, int iArgC) {
 	}
 
 	if (iClient != g_iClientOfInterest) {
-		char sUserName[32];
+		char sUserName[64];
 		GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
 		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Using", sUserName);
 		return Plugin_Handled;
@@ -1956,7 +1956,7 @@ public Action cmdStateSave(int iClient, int iArgC) {
 	if (!DirExists(sPath))
 		CreateDirectory(sPath, 509);
 	
-	char sMapName[32];
+	char sMapName[64];
 	GetCurrentMap(sMapName, sizeof(sMapName));
 	
 	g_iRecording.Timestamp = GetTime();
@@ -1968,7 +1968,7 @@ public Action cmdStateSave(int iClient, int iArgC) {
 			Format(sPathTemp, sizeof(sPathTemp), "%s/%s-%d.save", sPath, sMapName, ++iSlot);
 		} while (FileExists(sPathTemp));
 	} else {
-		char sArg1[32];
+		char sArg1[64];
 		GetCmdArg(1, sArg1, sizeof(sArg1));
 
 		iSlot = StringToInt(sArg1);
@@ -2006,7 +2006,7 @@ public Action cmdStateLoad(int iClient, int iArgC) {
 	}
 
 	if (iClient != g_iClientOfInterest) {
-		char sUserName[32];
+		char sUserName[64];
 		GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
 		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Using", sUserName);
 		return Plugin_Handled;
@@ -2027,7 +2027,7 @@ public Action cmdStateLoad(int iClient, int iArgC) {
 		BuildStateMenu(hMenu);
 		hMenu.Display(iClient, 0);
 	} else {
-		char sArg1[32];
+		char sArg1[64];
 		GetCmdArg(1, sArg1, sizeof(sArg1));
 
 		int iSaveID = StringToInt(sArg1);
@@ -2093,7 +2093,7 @@ public Action cmdStateDelete(int iClient, int iArgC) {
 		hMenu.Display(iClient, 0);
 		
 	} else {
-		char sArg1[32];
+		char sArg1[64];
 		GetCmdArg(1, sArg1, sizeof(sArg1));
 
 		int iSaveID = StringToInt(sArg1);
@@ -2146,7 +2146,7 @@ public Action Timer_RecList(Handle hTimer, any aData) {
 
 	ArrayList hClientInfo = iRecording.ClientInfo;
 	
-	char sTimeTotal[32];
+	char sTimeTotal[64];
 	ToTimeDisplay(sTimeTotal, sizeof(sTimeTotal), iRecording.FramesExpected/66);
 
 	static char sBuffer[4096];
@@ -2154,7 +2154,7 @@ public Action Timer_RecList(Handle hTimer, any aData) {
 
 	for (int i=0; i<hClientInfo.Length; i++) {
 		ClientInfo iClientInfo = hClientInfo.Get(i);
-		char sName[32];
+		char sName[64];
 		char sAuthID[24];
 
 		iClientInfo.GetName(sName, sizeof(sName));
@@ -2227,7 +2227,7 @@ public Action cmdNearby(int iClient, int iArgC) {
 			if (fVecDist < 1000) {
 				Handle hTr = TR_TraceRayFilterEx(fPos, fPosRecord, MASK_SHOT_HULL, RayType_EndPoint, traceHitEnvironment);
 				if (!TR_DidHit(hTr)) {
-					char sClass[32];
+					char sClass[64];
 					TF2_GetClassName(iClientInfo.Class, sClass, sizeof(sClass));
 					sClass[0] = CharToUpper(sClass[0]);
 
@@ -2276,7 +2276,7 @@ public Action cmdDelete(int iClient, int iArgC) {
 		return Plugin_Handled;
 	}
 	
-	char sArg1[32];
+	char sArg1[64];
 	GetCmdArg(1, sArg1, sizeof(sArg1));
 	
 	int iID = StringToInt(sArg1);
@@ -2411,7 +2411,7 @@ public Action cmdRewind(int iClient, int iArgC) {
 
 		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}Перемотано на начало");
 	} else {
-		char sArg1[32];
+		char sArg1[64];
 		GetCmdArg(1, sArg1, sizeof(sArg1));
 
 		int iFrames = StringToInt(sArg1);
@@ -2546,7 +2546,7 @@ public Action cmdSkip(int iClient, int iArgC) {
 	}
 
 
-	char sArg1[32];
+	char sArg1[64];
 	GetCmdArg(1, sArg1, sizeof(sArg1));
 
 	// TODO: Translate
@@ -2585,9 +2585,9 @@ public Action cmdSkipTime(int iClient, int iArgC) {
 		return Plugin_Handled;
 	}
 
-	char sArg1[32];
-	char sArg2[32];
-	char sArg3[32];
+	char sArg1[64];
+	char sArg2[64];
+	char sArg3[64];
 	GetCmdArg(1, sArg1, sizeof(sArg1));
 
 	int iFrame = 0;
@@ -2616,7 +2616,7 @@ public Action cmdSkipTime(int iClient, int iArgC) {
 		}
 	}
 
-	char sTimeRec[32];
+	char sTimeRec[64];
 
 	// TODO: Translate
 	if (iFrame >= g_hRecBufferFrames.Length) {
@@ -2706,20 +2706,20 @@ public Action cmdShow(int iClient, int iArgC) {
 		return Plugin_Handled;
 	}
 	if (g_iClientInstruction != INST_NOP) {
-		char sUserName[32];
+		char sUserName[64];
 		GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
 		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Using", sUserName);
 		return Plugin_Handled;
 	}
 	
-	char sArg1[32];
+	char sArg1[64];
 	GetCmdArg(1, sArg1, sizeof(sArg1));
 	
 	int iTarget = FindTarget(iClient, sArg1);
 	if (iTarget != -1) {
 		FakeClientCommand(iTarget, "showme");
 		
-		char sUserName[32];
+		char sUserName[64];
 		GetClientName(iTarget, sUserName, sizeof(sUserName));
 		CReplyToCommand(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Show To", sUserName);
 		CPrintToChat(iTarget, "{green}[{lightgreen}jb{green}] {white}%t", "Show Current");
@@ -2740,7 +2740,7 @@ public Action cmdShowMe(int iClient, int iArgC) {
 	}
 
 	if (g_iClientInstruction & INST_RECD) {
-		char sUserName[32];
+		char sUserName[64];
 		GetClientName(g_iClientOfInterest, sUserName, sizeof(sUserName));
 		CPrintToChat(iClient, "{green}[{lightgreen}jb{green}] {white}%t", "Recorder Using", sUserName);
 		return Plugin_Handled;
@@ -2768,7 +2768,7 @@ public Action cmdShowMe(int iClient, int iArgC) {
 	
 	Recording iClosestRecord;
 	if (GetTime()-g_eLastBubbleTime[iClient].iTime < 10) {
-		char sKey[32];
+		char sKey[64];
 		int iEntity = EntRefToEntIndex(g_eLastBubbleTime[iClient].iEnt);
 		if (iEntity == INVALID_ENT_REFERENCE) {
 			return Plugin_Handled;
@@ -2987,7 +2987,7 @@ public Action cmdChdir(int iClient, int iArgC) {
 		return Plugin_Handled;
 	}
 	
-	char sArg1[32];
+	char sArg1[64];
 	GetCmdArg(1, sArg1, sizeof(sArg1));
 	
 	if (strlen(sArg1) == 1 && sArg1[0] == '.') {
@@ -3191,7 +3191,7 @@ public Action Timer_BotJoinExecute(Handle hTimer, any aData) {
 		char sCommands[256];
 		g_hBotJoinExecute.GetString(sCommands, sizeof(sCommands));
 		
-		char sBuffers[16][32];
+		char sBuffers[16][64];
 		int iCmds = ExplodeString(sCommands, ";", sBuffers, 16, 32);
 		
 		for (int i=0; i<iCmds; i++) {
@@ -3359,16 +3359,16 @@ public Action Hook_StartTouchInfo(int iEntity, int iOther) {
 	if (Client_IsValid(iOther) && !IsFakeClient(iOther) && g_bBubble[iOther]) {
 		int iEntityRef = EntIndexToEntRef(iEntity);
 
-		char sKey[32];
+		char sKey[64];
 		Entity_GetName(iEntity, sKey, sizeof(sKey));
 
 		Recording iRecording;
 		g_hBubbleLookup.GetValue(sKey, iRecording);
 		
 		char sDisplay[256];
-		char sAuthorName[32];
+		char sAuthorName[64];
 		char sAuthID[24];
-		char sClass[32];
+		char sClass[64];
 		char sEquipName[64];
 
 		if (!IsRecordingVisible(iRecording, iOther)) {
@@ -3413,7 +3413,7 @@ public Action Hook_StartTouchInfo(int iEntity, int iOther) {
 			FormatEx(sAuthID, sizeof(sAuthID), "%T", "Неизвестно", iOther);
 		}
 
-		char sTimeTotal[32];
+		char sTimeTotal[64];
 		ToTimeDisplay(sTimeTotal, sizeof(sTimeTotal), iRecording.FramesExpected/66);
 
 		int iRecID = g_hRecordings.FindValue(iRecording);
@@ -3424,7 +3424,7 @@ public Action Hook_StartTouchInfo(int iEntity, int iOther) {
 				PrintHintText(iOther, "[%d] %t (%s)%s\n%t: %s\n%t", iRecID, "Class Recording", sClass, sTimeTotal, sEquipName, "Author", sDisplay, "Press Review", g_sCallKeyLabel);
 			}
 		} else {
-			char sCmd[32];
+			char sCmd[64];
 			g_hBotCallSignShort.GetString(sCmd, sizeof(sCmd));
 			
 			if (iRecording.Repo) {
@@ -3606,7 +3606,7 @@ public Action Hook_Entity_SetTransmit(int iEntity, int iClient) {
 		return Plugin_Handled;
 	}
 
-	char sKey[32];
+	char sKey[64];
 	Entity_GetName(iEntity, sKey, sizeof(sKey));
 
 	Recording iRecording;
@@ -3730,7 +3730,7 @@ bool CheckMap(File hFile, char[] sMapName) {
 
 	hFile.Seek(0x28, SEEK_SET);
 
-	char sFileMapName[32];
+	char sFileMapName[64];
 	hFile.ReadString(sFileMapName, sizeof(sFileMapName));
 	
 	hFile.Seek(iPosBackup, SEEK_SET);
@@ -4306,10 +4306,10 @@ bool LoadRecording(Recording iRecording) {
 
 	hFile.Seek(0x28, SEEK_SET);
 
-	char sMapName[32];
+	char sMapName[64];
 	GetCurrentMap(sMapName, sizeof(sMapName));
 
-	char sFileMapName[32];
+	char sFileMapName[64];
 	hFile.ReadString(sFileMapName, sizeof(sFileMapName));
 	if (!iRecording.Repo && !StrEqual(sMapName, sFileMapName, false)) {
 		LogError("Map mismatch (%s): %s", sFileMapName, sFilePath);
@@ -4387,11 +4387,11 @@ bool LoadRecording(Recording iRecording) {
 	for (int i=0; i<iRecClients; i++) {
 		ClientInfo iClientInfo = hClientInfo.Get(i);
 
-		char sName[32];
+		char sName[64];
 		hFile.ReadString(sName, sizeof(sName));
 		iClientInfo.SetName(sName);
 
-		char sAuthID[32];
+		char sAuthID[64];
 		hFile.ReadString(sAuthID, sizeof(sAuthID));
 		iClientInfo.SetAuthID(sAuthID);
 	}					
@@ -4453,7 +4453,7 @@ void LoadRecordings(bool bUseCachedRepoIndex = false) {
 		return;
 	}
 
-	char sMapName[32];
+	char sMapName[64];
 	GetCurrentMap(sMapName, sizeof(sMapName));
 	
 	Regex hFileRegex = new Regex("^([\\w_]+)\\-[\\d_]+");
@@ -4700,9 +4700,9 @@ ArrayList GetSaveStates() {
 
 	char sFilePath[PLATFORM_MAX_PATH];
 	char sFile[PLATFORM_MAX_PATH];
-	char sSaveID[32];
+	char sSaveID[64];
 
-	char sMapName[32];
+	char sMapName[64];
 	GetCurrentMap(sMapName, sizeof(sMapName));
 
 	char sRegExp[64];
@@ -4873,7 +4873,7 @@ bool SaveFile(char[] sFilePath) {
 	hFile.WriteInt32(iPosClientData);
 
 	hFile.Seek(iPosMapName, SEEK_SET);
-	char sMapName[32];
+	char sMapName[64];
 	GetCurrentMap(sMapName, sizeof(sMapName));
 	hFile.WriteString(sMapName, true);
 
@@ -4911,11 +4911,11 @@ bool SaveFile(char[] sFilePath) {
 	for (int i=0; i<hClientInfo.Length; i++) {
 		ClientInfo iClientInfo = view_as<ClientInfo>(hClientInfo.Get(i));
 
-		char sName[32];
+		char sName[64];
 		iClientInfo.GetName(sName, sizeof(sName));
 		hFile.WriteString(sName, true);	
 
-		char sAuthID[32];
+		char sAuthID[64];
 		iClientInfo.GetAuthID(sAuthID, sizeof(sAuthID));
 		hFile.WriteString(sAuthID, true);
 	}
@@ -4989,7 +4989,7 @@ void setProjectileGlow(int iEntity) {
 		return;
 	}
 
-	char sTargetName[32];
+	char sTargetName[64];
 	Entity_GetName(iEntity, sTargetName, sizeof(sTargetName));
 	if (!sTargetName[0]) {
 		FormatEx(sTargetName, sizeof(sTargetName), "proj%i", iEntity);
@@ -5221,7 +5221,7 @@ void RefreshModels() {
 		}
 
 		if (sWeaponModel[0] && (iWeaponEntity = CreateEntityByName("prop_dynamic")) != INVALID_ENT_REFERENCE) {
-			char sKey[32];
+			char sKey[64];
 			FormatEx(sKey, sizeof(sKey), "_jumpbot_rec_weapon:%d", iRecording);
 			g_hBubbleLookup.SetValue(sKey, iRecording);
 
@@ -5252,7 +5252,7 @@ void RefreshModels() {
 
 		int iNodeEntity = CreateEntityByName("prop_dynamic");
 		if (IsValidEntity(iNodeEntity)) {
-			char sKey[32];
+			char sKey[64];
 			FormatEx(sKey, sizeof(sKey), "_jumpbot_rec_node:%d", iRecording);
 
 			SetEntityModel(iNodeEntity, HINT_MODEL_MARKER);
@@ -5320,7 +5320,7 @@ void RemoveModels(Recording iRecording) {
 		if (iEntity > 0 && IsValidEntity(iEntity)) {
 			AcceptEntityInput(iEntity, "Kill");
 
-			char sKey[32];
+			char sKey[64];
 			Entity_GetName(iEntity, sKey, sizeof(sKey));
 			g_hBubbleLookup.Remove(sKey);
 		}
@@ -5334,7 +5334,7 @@ void RemoveModels(Recording iRecording) {
 		if (iEntity > 0 && IsValidEntity(iEntity)) {
 			AcceptEntityInput(iEntity, "Kill");
 
-			char sKey[32];
+			char sKey[64];
 			Entity_GetName(iEntity, sKey, sizeof(sKey));
 			g_hBubbleLookup.Remove(sKey);
 		}
@@ -5639,7 +5639,7 @@ bool PrepareBots(Recording iRecording) {
 		for (int i=0; i<hClientInfo.Length; i++) {
 			ClientInfo iClientInfo = hClientInfo.Get(i);
 			
-			char sAuthorName[32];
+			char sAuthorName[64];
 			iClientInfo.GetName(sAuthorName, sizeof(sAuthorName));
 
 			int iRecBot = g_hRecordingBots.Get(i, RecBot::iEnt);
@@ -5929,7 +5929,7 @@ void BuildStateMenu(Menu hMenu) {
 	ArrayList hSaveStates = GetSaveStates();
 	for (int i=0; i<hSaveStates.Length; i++) {
 		Recording iRecording = hSaveStates.Get(i);
-		char sInfo[32];
+		char sInfo[64];
 		IntToString(i+1, sInfo, sizeof(sInfo));
 
 		if (!iRecording) {
@@ -6046,7 +6046,7 @@ public int MenuHandler_PerspectiveOptions(Menu hMenu, MenuAction iAction, int iC
 public int MenuHandler_LoadState(Menu hMenu, MenuAction iAction, int iClient, int iOption) {
 	switch (iAction) {
 		case MenuAction_Select: {
-			char sBuffer[32];
+			char sBuffer[64];
 			hMenu.GetItem(iOption, sBuffer, sizeof(sBuffer));
 
 			FakeClientCommand(iClient, "jb_state_load %s", sBuffer);
@@ -6067,7 +6067,7 @@ public int MenuHandler_LoadState(Menu hMenu, MenuAction iAction, int iClient, in
 public int MenuHandler_DeleteState(Menu hMenu, MenuAction iAction, int iClient, int iOption) {
 	switch (iAction) {
 		case MenuAction_Select: {
-			char sBuffer[32];
+			char sBuffer[64];
 			hMenu.GetItem(iOption, sBuffer, sizeof(sBuffer));
 
 			FakeClientCommand(iClient, "jb_state_delete %s", sBuffer);
