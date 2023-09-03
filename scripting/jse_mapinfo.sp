@@ -773,22 +773,22 @@ void ShowSettingsPanel(int iClient) {
 	Panel hPanel = new Panel();
 	hPanel.SetTitle("Map Info");
 
-	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Show current map on join", g_bJoinMessage[iClient] ? "x" : " ");
+	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Показать текущую карту при подключении", g_bJoinMessage[iClient] ? "x" : " ");
 	hPanel.DrawItem(sBuffer);
 
-	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Use tiers beyond T6", g_bExtendedTiers[iClient] ? "x" : " ");
+	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Использование уровней выше T6", g_bExtendedTiers[iClient] ? "x" : " ");
 	hPanel.DrawItem(sBuffer);
 
-	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Show results as lists", g_bListView[iClient] ? "x" : " ");
+	FormatEx(sBuffer, sizeof(sBuffer), "[%s] Показать результаты в виде списков", g_bListView[iClient] ? "x" : " ");
 	hPanel.DrawItem(sBuffer);
 
 	hPanel.DrawText(" ");
 
 	hPanel.CurrentKey = 8;
-	hPanel.DrawItem("Back");
+	hPanel.DrawItem("Назад");
 
 	hPanel.CurrentKey = 10;
-	hPanel.DrawItem("Exit", ITEMDRAW_CONTROL);
+	hPanel.DrawItem("Выход", ITEMDRAW_CONTROL);
 
 	hPanel.Send(iClient, MenuHandler_Settings, 0);
 	delete hPanel;
