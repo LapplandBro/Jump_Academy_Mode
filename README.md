@@ -16,11 +16,11 @@ JSE - это набор модульных плагинов для включе�
 
 ## Требуется:
 * Metamod 
-* Sourcemod 1.12 
+* Sourcemod 1.12.7039 
 * Lin/Win SRCDS 
 
 ## Зависимости:
-* [Sourcemod 1.10](https://www.sourcemod.net/)
+* [Sourcemod 1.12.7039](https://www.sourcemod.net/)
 * [AutoExecConfig](https://github.com/Impact123/AutoExecConfig)
 * [BotController](https://github.com/LapplandBro/sourcemod-botcontroller)
 * [MultiColors](https://github.com/Bara/Multi-Colors)
