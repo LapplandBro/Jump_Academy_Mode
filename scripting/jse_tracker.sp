@@ -605,8 +605,7 @@ public int Native_GetPlayerProgress(Handle hPlugin, int iArgC) {
 	char sMapName[32];
 	GetNativeString(5, sMapName, sizeof(sMapName));
 
-// 	ProgressLookup pCallback = view_as<ProgressLookup>(GetNativeFunction(6));
-	Function pCallback = GetNativeFunction(6);
+	Function pCallback = GetNativeFunction(6); // ProgressLookup
 
 	any aData = GetNativeCell(7);
 
@@ -615,6 +614,10 @@ public int Native_GetPlayerProgress(Handle hPlugin, int iArgC) {
 	}
 
 	if (sMapName[0]) {
+		if (pCallback == INVALID_FUNCTION) {
+			ThrowError("Callback function is required with map query");
+		}
+
 		DB_GetProgress(iClient, hResult, iTeam, iClass, sMapName, pCallback, aData);
 		return -1;
 	}
@@ -637,7 +640,7 @@ public int Native_GetPlayerProgress(Handle hPlugin, int iArgC) {
 		}
 	}
 
-	if (pCallback) {
+	if (pCallback != INVALID_FUNCTION) {
 		Call_StartFunction(null, pCallback);
 		Call_PushCell(iClient);
 		Call_PushCell(hResult);
