@@ -640,7 +640,7 @@ void SendCourseMenu(int iClient, MenuHandler fnCourseHandler, MenuHandler fnJump
 	}
 
 	Menu hMenu = new Menu(fnCourseHandler);
-	hMenu.SetTitle("Select Course");
+	hMenu.SetTitle("Выберите курс:");
 	hMenu.ExitBackButton = bBackButton;
 	hMenu.ExitButton = true;
 
