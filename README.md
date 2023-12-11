@@ -18,6 +18,7 @@ JSE - это набор модульных плагинов для включе�
 * Metamod 
 * Sourcemod 1.12.0.7039 
 * Lin/Win SRCDS 
+* BotController - Visual C++ RUntime Pack 2003-2017
 
 ## Зависимости:
 * [Sourcemod 1.12.7039](https://www.sourcemod.net/)
