@@ -116,7 +116,7 @@ void GotoPlayer(int iClient, int iTarget, bool bNotify=true) {
 			CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы телепортированы в {limegreen}%N{white}.", iTarget);	
 		}
 
-		CPrintToChat(iTarget, "{green}[{lightgreen}Jump Essentials{green}]%N {white}телепортировался к вам.", iClient);
+		CPrintToChat(iTarget, "{green}[{lightgreen}Jump Essentials{green}] %N {white}телепортировался к вам.", iClient);
 	}
 }
 
@@ -329,7 +329,7 @@ public Action cmdGoto(int iClient, int iArgC) {
 							CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] {white}Вы не были в {limegreen}%N{white} расположение до: {yellow}%s{white}.", iTarget, sBuffer);
 						}
 					} else {
-						CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}]%N {white}не встречается ни в одном прыжке.", iTarget);
+						CPrintToChat(iClient, "{green}[{lightgreen}Jump Essentials{green}] %N {white}не встречается ни в одном прыжке.", iTarget);
 					}
 				}
 			}
